@@ -8,18 +8,15 @@ class User{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private var userId: Long = 0
     @Column
-    private var nickname: String = "비회원"
+    private var nickname: String? = null
 
     fun getUserId(): Long{
         return userId
     }
-    fun setUserId(userId:Long){
-        this.userId = userId
-    }
-    fun getNickname(): String{
+    fun getNickname(): String?{
         return nickname
     }
-    fun setNickname(nickname:String){
+    fun setNickname(nickname:String?){
         this.nickname = nickname
     }
 

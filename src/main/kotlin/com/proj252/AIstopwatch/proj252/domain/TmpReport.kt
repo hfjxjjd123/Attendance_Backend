@@ -3,67 +3,31 @@ package com.proj252.AIstopwatch.proj252.domain
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import lombok.Data
+import lombok.Getter
+import lombok.NonNull
+import lombok.RequiredArgsConstructor
+import lombok.Setter
 import java.sql.Time
 import java.util.Date
 
 @Entity
+@Data //id setter는 막아야
 class TmpReport {
+//Timed이 아니라 Int 타입 사용
 
-    @Id
-    private var date: Date
+    @Id @NonNull
+    private lateinit var date: Date
     @Column
-    private var totalTime: Time
+    private var totalTime: Int=0
     @Column
-    private var goalTime: Time?
+    private var goalTime: Int? = null
     @Column
-    private var goalBeginning: Date?
+    private var goalBeginning: Date? = null
     @Column
-    private var goalEnding: Date?
-    @Column
-    private var userId: Long
-
-    constructor(date: Date, totalTime: Time, goalTime: Time?, goalBeginning: Date?, goalEnding: Date?, userId: Long) {
-        this.date = date
-        this.totalTime = totalTime
-        this.goalTime = goalTime
-        this.goalBeginning = goalBeginning
-        this.goalEnding = goalEnding
-        this.userId = userId
-    }
-
-
-    fun getUserId(): Long{
-        return this.userId
-    }
-    fun getDate(): Date{
-        return this.date
-    }
-
-    fun setTotalTime(time: Time){
-        this.totalTime = time
-    }
-    fun getTotalTime(): Time{
-        return this.totalTime
-    }
-    fun setGoalTime(time: Time?){
-        this.goalTime = time
-    }
-    fun getGoalTime(): Time?{
-        return this.goalTime
-    }
-    fun setGoalBeginning(datetime: Date?){
-        this.goalBeginning = datetime
-    }
-    fun getGoalBeginning(): Date?{
-        return this.goalBeginning
-    }
-    fun setGoalEnding(datetime:Date?){
-        this.goalEnding = datetime
-    }
-    fun getGoalEnding(): Date?{
-        return this.goalEnding
-    }
-
+    private var goalEnding: Date? = null
+    @Column @NonNull
+    private var userId: Long = -1
 
 
 }
