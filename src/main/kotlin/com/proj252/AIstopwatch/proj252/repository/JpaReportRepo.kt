@@ -35,9 +35,8 @@ public class JpaReportRepo:ReportRepo  {
     }
 
     override fun getReport(userId: Long, date: Date): Report? {
-        var report: Report = em.find(Report, primaryKey= userId)
+        var report: Report = em.find(Report.class, primaryKey= userId)
     }
-
     override fun createReport(userId: Long, date: Date): Report {
         TODO("Not yet implemented")
     }

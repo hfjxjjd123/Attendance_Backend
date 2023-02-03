@@ -6,6 +6,7 @@ plugins {
 	kotlin("plugin.serialization") version "1.5.0"
 	kotlin("jvm") version "1.7.22"
 	kotlin("plugin.spring") version "1.7.22"
+	id("org.jetbrains.kotlin.plugin.lombok") version "1.5.20-RC"
 }
 
 group = "com.proj252.AIstopwatch"
@@ -24,6 +25,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	compileOnly("org.projectlombok:lombok:1.18.20")
+	annotationProcessor("org.projectlombok:lombok:1.18.20")
 }
 
 tasks.withType<KotlinCompile> {
