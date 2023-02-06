@@ -1,8 +1,6 @@
 package com.proj252.AIstopwatch.proj252.controller
 
 import com.proj252.AIstopwatch.proj252.domain.Report
-import com.proj252.AIstopwatch.proj252.service.ReportService
-import kotlinx.serialization.json.JsonObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.HashMap
 

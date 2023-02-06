@@ -17,7 +17,7 @@ class TmpReport {
 //Timed이 아니라 Int 타입 사용
 
     @Id @NonNull
-    private lateinit var date: Date
+    private lateinit var date: String
     @Column
     private var totalTime: Int=0
     @Column
