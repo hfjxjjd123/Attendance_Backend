@@ -35,7 +35,7 @@ class StopwatchService {
     }
     public fun runStopwatch(userId: Long, date: Date) {
         try {
-            stopwatchRepo.setRunTime(userId = userId, datetime = date)
+//            changeTimeRepo.setRunTime(userId = userId, datetime = date)
 
         } catch (e: Exception) {
             //!! 알아서 처리
@@ -44,7 +44,7 @@ class StopwatchService {
     }
     public fun pauseStopwatch(userId: Long, date: Date){
         try{
-            stopwatchRepo.setPauseTime(userId= userId, datetime = date)
+//            changeTimeRepo.setPauseTime(userId= userId, datetime = date)
         }catch (e: Exception){
             //!! 알아서 처리
             print("stopwatch pause err, retry?")
@@ -52,7 +52,7 @@ class StopwatchService {
     }
     public fun warnStopwatch(userId: Long, date: Date){
         try{
-            stopwatchRepo.setWarnTime(userId= userId, datetime= date)
+//            changeTimeRepo.setWarnTime(userId= userId, datetime= date)
         }catch (e: Exception){
             //!! 알아서 처리
             print("stopwatch warn err, retry?")
