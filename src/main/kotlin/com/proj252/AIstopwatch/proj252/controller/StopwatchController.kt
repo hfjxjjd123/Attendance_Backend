@@ -16,32 +16,29 @@ import java.util.*
 @RestController
 @RequestMapping("stopwatch")
 class StopwatchController {
-//    private final var stopwatchService: StopwatchService
-//
-//    @Autowired
-//    constructor(stopwatchService: StopwatchService){
-//        this.stopwatchService = stopwatchService
-//    }
+
+    private final var stopwatchService: StopwatchService
+
+    @Autowired
+    constructor(stopwatchService: StopwatchService){
+        this.stopwatchService = stopwatchService
+    }
 
     @PostMapping("/control/run")
     fun runStopwatch(@RequestBody stopwatchRunDto: StopwatchRunDto, @CookieValue userId: Long){
-//        stopwatchService.runStopwatch(userId, stopwatchRunDto.runTime)
-        print("run 정상동작")
+        stopwatchService.runStopwatch(userId, stopwatchRunDto.runTime)
     }
     @PostMapping("/control/pause")
     fun pauseStopwatch(@RequestBody stopwatchPauseDao: StopwatchPauseDto, @CookieValue userId: Long){
-//        stopwatchService.pauseStopwatch(userId, stopwatchPauseDao.pauseTime)
-        print("pause 정상동작")
+        stopwatchService.pauseStopwatch(userId, stopwatchPauseDao.pauseTime)
     }
     @PostMapping("/sync")
     fun syncStopwatch(@RequestBody stopwatchSyncDao: StopwatchSyncDto, @CookieValue userId: Long){
-//        stopwatchService.saveStopwatch(userId, stopwatchSyncDao.time)
-        print("sync 정상동작")
+        stopwatchService.saveStopwatch(userId, stopwatchSyncDao.time)
     }
     @GetMapping("/total")
-    fun getTotalTime(@CookieValue userId: Long): String{
-//        return stopwatchService.getStopwatch(userId, Date())
-        return userId.toString()+"0"
+    fun getTotalTime(@CookieValue userId: Long): Int{
+        return stopwatchService.getStopwatch(userId, Date())
     }
 
 

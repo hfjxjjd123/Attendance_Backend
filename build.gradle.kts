@@ -3,9 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "3.0.2"
 	id("io.spring.dependency-management") version "1.1.0"
-	kotlin("plugin.serialization") version "1.5.0"
-	kotlin("jvm") version "1.7.22"
-	kotlin("plugin.spring") version "1.7.22"
+	kotlin("plugin.serialization") version "1.8.10"
+	kotlin("jvm") version "1.8.10"
+	kotlin("plugin.spring") version "1.8.10"
+	id ("org.jetbrains.kotlin.plugin.jpa") version "1.8.10"
 	id("org.jetbrains.kotlin.plugin.lombok") version "1.5.20-RC"
 }
 
@@ -28,12 +29,18 @@ dependencies {
 	implementation ("com.h2database:h2")
 	compileOnly("org.projectlombok:lombok:1.18.20")
 	annotationProcessor("org.projectlombok:lombok:1.18.20")
+
+}
+
+noArg {
+	annotation("com.my.Annotation")
+	invokeInitializers = true
 }
 
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+		jvmTarget = "1.8"
 	}
 }
 

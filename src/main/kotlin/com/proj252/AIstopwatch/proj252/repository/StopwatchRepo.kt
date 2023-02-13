@@ -6,10 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.Date
 
 public interface StopwatchRepo {
-    fun getByUserId(userId: Long): TmpReport?
-    fun getTotalTime(userId: Long): Int
-    fun setTotalTime(userId: Long, second: Int)
-
 
 
 //    fun deleteReport(userId: Long)

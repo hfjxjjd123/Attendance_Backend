@@ -3,22 +3,17 @@ package com.proj252.AIstopwatch.proj252.domain
 import jakarta.persistence.*
 
 @Entity
-class User{
-
+data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var userId: Long = 0
+    var userId: Long,
+
     @Column
-    private var nickname: String? = null
+    private var nickname: String?,
 
-    fun getUserId(): Long{
-        return userId
-    }
-    fun getNickname(): String?{
-        return nickname
-    }
-    fun setNickname(nickname:String?){
-        this.nickname = nickname
-    }
-
-
-}
+    @OneToOne(mappedBy = "user")
+    private val tmpReport: TmpReport,
+    @OneToOne(mappedBy="user")
+    private val member: Member?,
+    @OneToOne(mappedBy = "user")
+    private val alarm: Alarm
+)
