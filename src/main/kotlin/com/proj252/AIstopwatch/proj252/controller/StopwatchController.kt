@@ -41,5 +41,14 @@ class StopwatchController {
         return stopwatchService.getTotalTime(userId, Date())
     }
 
+    @PostMapping("/alarm")
+    fun setAlarm(@RequestBody dto:dto, @CookieValue userId: Long){
+        alarmService.saveStopwatch(userId, stopwatchSyncDto.date, stopwatchSyncDto.time)
+    }
+    @GetMapping("/alarm")
+    fun getAlarm(@CookieValue userId: Long): Int{
+        return alarmService.getTotalTime(userId, Date())
+    }
+
 
 }
