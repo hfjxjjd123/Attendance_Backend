@@ -18,8 +18,8 @@ data class Alarm(
     @OneToOne @JoinColumn(name = "userId")
     val user:User,
 
-    @Column
+    @Column(name = "ison")
     val ison: Int,
-    @Column
+    @Column(name = "ringtone_name")
     val ringtoneName: String
 )

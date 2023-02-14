@@ -13,7 +13,7 @@ import java.util.*
 data class TmpChangeTime(
     @Id @NonNull
     private val track: Date,
-    @ManyToOne @JoinColumn(name = "tmpReportDate")
+    @ManyToOne @JoinColumn(name = "tmp_report_date")
     private val tmpReport: TmpReport
 
 )

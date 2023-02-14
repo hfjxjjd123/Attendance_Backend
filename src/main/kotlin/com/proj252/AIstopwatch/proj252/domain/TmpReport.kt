@@ -23,20 +23,20 @@ data class TmpReport(
 
     @Id @NonNull
     val date: Date,
-    @OneToOne @JoinColumn(name = "userId")
+    @OneToOne @JoinColumn(name = "user_id")
     val user: User,
 
-    @Column
+    @Column(name = "total_time")
     var totalTime: Int,
-    @Column
+    @Column(name = "goal_time")
     var goalTime: Int?,
-    @Column
+    @Column(name = "goal_beginning")
     var goalBeginning: Date?,
-    @Column
+    @Column(name = "goal_ending")
     var goalEnding: Date?,
 
     @OneToMany(mappedBy = "tmpReport")
-    val changeTimes: List<ChangeTime>,
+    var changeTimes: MutableList<TmpChangeTime>,
     @OneToMany(mappedBy = "tmpReport")
-    val warnTimes: List<WarnTime>
+    var warnTimes: MutableList<TmpWarnTime>
 )

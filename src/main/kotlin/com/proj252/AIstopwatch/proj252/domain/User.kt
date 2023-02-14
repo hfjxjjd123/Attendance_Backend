@@ -7,7 +7,7 @@ data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var userId: Long,
 
-    @Column
+    @Column(name = "nickname")
     private var nickname: String?,
 
     @OneToOne(mappedBy = "user")

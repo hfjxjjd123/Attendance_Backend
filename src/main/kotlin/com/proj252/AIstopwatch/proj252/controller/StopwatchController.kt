@@ -29,16 +29,16 @@ class StopwatchController {
         stopwatchService.runStopwatch(userId, stopwatchRunDto.runTime)
     }
     @PostMapping("/control/pause")
-    fun pauseStopwatch(@RequestBody stopwatchPauseDao: StopwatchPauseDto, @CookieValue userId: Long){
-        stopwatchService.pauseStopwatch(userId, stopwatchPauseDao.pauseTime)
+    fun pauseStopwatch(@RequestBody stopwatchPauseDto: StopwatchPauseDto, @CookieValue userId: Long){
+        stopwatchService.pauseStopwatch(userId, stopwatchPauseDto.pauseTime)
     }
     @PostMapping("/sync")
-    fun syncStopwatch(@RequestBody stopwatchSyncDao: StopwatchSyncDto, @CookieValue userId: Long){
-        stopwatchService.saveStopwatch(userId, stopwatchSyncDao.time)
+    fun syncStopwatch(@RequestBody stopwatchSyncDto: StopwatchSyncDto, @CookieValue userId: Long){
+        stopwatchService.saveStopwatch(userId, stopwatchSyncDto.date, stopwatchSyncDto.time)
     }
     @GetMapping("/total")
     fun getTotalTime(@CookieValue userId: Long): Int{
-        return stopwatchService.getStopwatch(userId, Date())
+        return stopwatchService.getTotalTime(userId, Date())
     }
 
 
