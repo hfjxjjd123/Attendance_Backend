@@ -5,7 +5,7 @@ import com.proj252.AIstopwatch.proj252.domain.User
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
-interface SdjAlarmRepo: JpaRepository<Alarm,User> {
+interface SdjAlarmRepo: JpaRepository<Alarm,Long> {
     @Override
-    override fun findById(id: User): Optional<Alarm>
+    override fun findById(id: Long): Optional<Alarm>
 }

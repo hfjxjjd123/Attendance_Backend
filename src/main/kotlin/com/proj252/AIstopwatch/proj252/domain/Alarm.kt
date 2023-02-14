@@ -15,11 +15,11 @@ import lombok.Setter
 @Entity
 data class Alarm(
     @Id
-    @OneToOne @JoinColumn(name = "userId")
+    @OneToOne @JoinColumn(name = "user_id")
     val user:User,
 
     @Column(name = "ison")
-    val ison: Int,
+    var ison: Int,
     @Column(name = "ringtone_name")
-    val ringtoneName: String
+    var ringtoneName: String
 )

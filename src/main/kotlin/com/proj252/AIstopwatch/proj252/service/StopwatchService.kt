@@ -101,15 +101,4 @@ class StopwatchService {
         }
     }
 
-    public fun changeRingtone(userId: Long){
-        try {
-
-
-
-
-        }catch (e: Exception){
-
-        }
-    }
-
 }
