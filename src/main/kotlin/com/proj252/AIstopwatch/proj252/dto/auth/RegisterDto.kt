@@ -1,4 +1,7 @@
 package com.proj252.AIstopwatch.proj252.dto.auth
 
-class RegisterDto {
-}
+data class RegisterDto(
+    val userId: String,
+    val nickname: String,
+    val passsword: String
+)

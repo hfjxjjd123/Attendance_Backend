@@ -1,4 +1,4 @@
-package com.proj252.AIstopwatch.proj252.dto.user
+package com.proj252.AIstopwatch.proj252.dto.auth
 
 class UserDto {
 }
