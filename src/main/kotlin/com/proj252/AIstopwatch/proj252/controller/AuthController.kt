@@ -18,21 +18,20 @@ class AuthController {
     }
 
     @PostMapping("/signin")
-    fun signIn(@RequestBody signinDto: SigninDto){
-        authService.signin()
+    fun signIn(@RequestBody signinDto: SigninDto, @CookieValue userId: Long){
+        authService.signin(signinDto, userId)
     }
     @PostMapping("/signout")
     fun signOut(@CookieValue userId: Long){
-        authService.signout()
+        authService.signout(userId)
     }
     @PostMapping("/register")
-    fun register(@RequestBody registerDto: RegisterDto){
-        authService.register()
-
+    fun register(@RequestBody registerDto: RegisterDto, @CookieValue userId: Long){
+        authService.register(registerDto, userId)
     }
     @PostMapping("/unregister")
     fun unregister(@CookieValue userId: Long){
-        authService.unregister()
+        authService.unregister(userId)
     }
 
 }
