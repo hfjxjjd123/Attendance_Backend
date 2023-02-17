@@ -47,7 +47,8 @@ class AuthService {
     }
     public fun unregister(userId: Long){
         if(isConnecting(userId)){
-            unregisterMember()
+            //find member - by userId
+            unregisterMember(userId)
             signout(userId)
         }else{
             //400번대 에러만들기
@@ -93,8 +94,8 @@ class AuthService {
 
 
     }
-    private fun unregisterMember(){
-        memberRepo.delete()
+    private fun unregisterMember(userId: Long){
+        memberRepo.deleteMemberByUser_UserId(userId)
     }
 
     private fun validateDupId(){

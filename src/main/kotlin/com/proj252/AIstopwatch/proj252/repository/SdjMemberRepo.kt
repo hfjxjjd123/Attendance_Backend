@@ -12,5 +12,5 @@ interface SdjMemberRepo: JpaRepository<Member, String> {
     @Override
     fun findMemberById(accountId: String): Optional<Member>
     @Override
-    fun deleteMemberById(accountId: String)
+    fun deleteMemberByUser_UserId(userId: Long)
 }
