@@ -41,8 +41,11 @@ class AuthService {
         if(isConnecting(userId)){
             print("is Already SignIn") //400번대 에러만들기
         }else{
-            validateDupId()
-            registerMember(registerDto)
+            if(validateDupId(registerDto.accountId)){
+                print("Member using this already is")
+            }else{
+                registerMember(registerDto)
+            }
         }
     }
     public fun unregister(userId: Long){
@@ -98,8 +101,8 @@ class AuthService {
         memberRepo.deleteMemberByUser_UserId(userId)
     }
 
-    private fun validateDupId(){
-
+    private fun validateDupId(accountId: String): Boolean{
+        return memberRepo.existsMemberById(accountId)
     }
 
     private fun registerUser(nickname: String): User{
