@@ -95,7 +95,6 @@ class AuthService {
             memberRepo.save(member)
         }
 
-
     }
     private fun unregisterMember(userId: Long){
         memberRepo.deleteMemberByUser_UserId(userId)
