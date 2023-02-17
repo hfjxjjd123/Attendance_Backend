@@ -57,9 +57,11 @@ class AuthService {
             //400번대 에러만들기
         }
     }
-    public fun useWithoutLogin(){
-        //session Id 쿠키로 전달
-        userRepo.save(User(nickname = "UNKNOWN"))
+    public fun useWithoutLogin(userId: Long){
+        if(!isConnecting(userId)){
+            //session Id 쿠키로 전달
+            userRepo.save(User(nickname = "UNKNOWN"))
+        }
     }
 
 
