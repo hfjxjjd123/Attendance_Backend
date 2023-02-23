@@ -1,4 +1,4 @@
-package com.proj252.AIstopwatch.proj252.u_domain
+package com.proj252.AIstopwatch.proj252.domain
 
 import jakarta.persistence.*
 import org.springframework.security.core.authority.SimpleGrantedAuthority

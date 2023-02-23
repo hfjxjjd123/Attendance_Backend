@@ -1,4 +1,4 @@
-package com.proj252.AIstopwatch.proj252.u_domain
+package com.proj252.AIstopwatch.proj252.domain
 
 import jakarta.persistence.*
 
@@ -10,8 +10,7 @@ data class Host (
     @ManyToOne
     @JoinColumn(name = "user_id")
     val user: CustomUser,
-
     @ManyToOne
     @JoinColumn(name = "group_id")
-    val group: Group
+    val group: Group,
 )
