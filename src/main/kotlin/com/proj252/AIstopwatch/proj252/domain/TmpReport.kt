@@ -11,7 +11,7 @@ data class TmpReport(
     @Id @NonNull
     val date: Date,
     @OneToOne @JoinColumn(name = "user_id")
-    val user: User,
+    val customUser: CustomUser,
 
     @Column(name = "total_time")
     var totalTime: Int,

@@ -1,5 +1,6 @@
 package com.proj252.AIstopwatch.proj252.security
 
+import com.proj252.AIstopwatch.proj252.service.GoogleOAuth2UserService
 import com.proj252.AIstopwatch.proj252.service.GoogleOAuthUserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -29,7 +30,7 @@ class SecurityConfig {
             .oauth2Login()
             .loginPage("/login") //!!로그인이 이뤄질 페이지 명시
             .userInfoEndpoint()
-            .userService(GoogleOAuthUserService())
+            .userService(GoogleOAuth2UserService())
             .and()
             .successHandler(oauth2AuthenticationSuccessHandler())
 
