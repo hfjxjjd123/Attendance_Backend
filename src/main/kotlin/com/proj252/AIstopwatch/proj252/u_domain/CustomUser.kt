@@ -7,22 +7,22 @@ import org.springframework.security.core.userdetails.User
 @Entity
 data class CustomUser(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val userId: Long? = null,
+    val id: Long? = null,
 
-    @Column(name = "nickname")
-    private var nickname: String,
+    @Column(name = "name")
+    val name: String,
 
-    @OneToOne(mappedBy = "customUser", cascade = [CascadeType.ALL])
-    private val tmpReport: TmpReport? = null,
-    @OneToOne(mappedBy="customUser", cascade = [CascadeType.REMOVE, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH])
-    private val member: Member? = null,
-    @OneToOne(mappedBy = "customUser", cascade = [CascadeType.ALL])
-    private val alarm: Alarm? = null
+    @OneToMany(mappedBy = "host", cascade = [CascadeType.ALL])
+    var hosts: MutableList<Host>,
+    @OneToMany(mappedBy = "mate", cascade = [CascadeType.ALL])
+    var mates: MutableList<Mate>,
+
+
+
 ){
-
-    fun toUser(): User{
+    fun toUser(): User {
         return User(
-            nickname,
+            name,
             "",
             mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
         )
