@@ -11,10 +11,10 @@ data class Group(
 
     @OneToMany(mappedBy = "host", cascade = [CascadeType.ALL])
     var hosts: MutableList<Host>,
-    @OneToMany(mappedBy = "mate", cascade = [CascadeType.ALL])
-    var mates: MutableList<Mate>,
-    @OneToMany(mappedBy = "subject", cascade = [CascadeType.ALL])
-    var subjects: MutableList<Subject>,
+    @OneToMany(mappedBy = "partis", cascade = [CascadeType.ALL])
+    var partis: MutableList<Partis>,
+    @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL] )
+    var event: Event,
     @OneToOne(mappedBy = "notification", cascade = [CascadeType.ALL])
     private val notification: Notification,
 )

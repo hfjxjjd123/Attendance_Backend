@@ -12,14 +12,12 @@ data class CustomUser(
     @Column(name = "name")
     val name: String,
 
-    @OneToMany(mappedBy = "host", cascade = [CascadeType.ALL])
-    var hosts: MutableList<Host>,
-    @OneToMany(mappedBy = "mate", cascade = [CascadeType.ALL])
-    var mates: MutableList<Mate>,
+    @OneToMany(mappedBy = "custom_user", cascade = [CascadeType.ALL])
+    val hosts: MutableList<Host>,
+    @OneToMany(mappedBy = "custom_user", cascade = [CascadeType.ALL])
+    val partis: MutableList<Partis>,
 
-
-
-){
+    ) {
     fun toUser(): User {
         return User(
             name,

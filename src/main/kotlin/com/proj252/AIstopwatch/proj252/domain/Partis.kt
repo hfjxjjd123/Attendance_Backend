@@ -2,7 +2,7 @@ package com.proj252.AIstopwatch.proj252.domain
 
 import jakarta.persistence.*
 
-data class Mate(
+data class Partis(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
@@ -12,6 +12,12 @@ data class Mate(
     @ManyToOne
     @JoinColumn(name = "group_id")
     val group: Group,
-    @OneToMany(mappedBy = "attendance", cascade = [CascadeType.ALL])
-    val attendances: MutableList<Attendance>,
+
+    @Column(name = "event_counter")
+    val eventCounter: Int,
+    @Column(name = "attendances")
+    val attendances: Int,
+    @Column(name = "natttend")
+    val nattend: Int,
+
 )

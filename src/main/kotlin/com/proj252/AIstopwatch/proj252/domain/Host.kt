@@ -2,8 +2,7 @@ package com.proj252.AIstopwatch.proj252.domain
 
 import jakarta.persistence.*
 
-data class Host (
-
+data class Host(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
