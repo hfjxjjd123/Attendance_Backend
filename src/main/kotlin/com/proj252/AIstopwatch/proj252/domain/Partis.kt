@@ -8,7 +8,7 @@ data class Partis(
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    val user: CustomUser,
+    val user: User,
     @ManyToOne
     @JoinColumn(name = "group_id")
     val group: Group,
@@ -20,4 +20,4 @@ data class Partis(
     @Column(name = "natttend")
     val nattend: Int,
 
-)
+    )

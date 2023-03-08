@@ -9,8 +9,11 @@ import java.util.*
 interface SdjEventRepo: JpaRepository<Event,Long> {
     fun findByGroupId(groupId: Long): Optional<Event>
 
-    //쿼리문을 직접 짜야하지 않을까?
+    //쿼리문로직 1
+    //userId => user => host => group => event
+
     fun findByHost(userId: Long): Optional<Event>{
+        "SELECT e FROM Event e WHERE e.groupId = :email AND u.password = :password")
 
     }
     fun findByPartis(userId: Long): Optional<Event>{
