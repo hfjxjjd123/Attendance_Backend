@@ -8,8 +8,8 @@ data class Event(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
-    @Column(name = "ntime")
-    val ntime: Date,
+    @Column(name = "next_schedule")
+    val nextSchedule: Date,
     @Column(name = "name")
     val name: String,
     @Column(name = "rule")
