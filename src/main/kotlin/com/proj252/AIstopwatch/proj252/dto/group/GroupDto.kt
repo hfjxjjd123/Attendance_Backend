@@ -1,3 +1,7 @@
 package com.proj252.AIstopwatch.proj252.dto.group
 
-data class GroupDto()
+import java.util.SimpleTimeZone
+
+data class GroupDto(
+    val hi:String
+)

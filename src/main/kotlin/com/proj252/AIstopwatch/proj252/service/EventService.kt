@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 //!! Service니까 날짜 변화시 초기화 등이 여기서 반영되어야 한다는 것. 각자마다 조회 & 날짜 변경 확인 & 이후 진행하는 로직을 만들 것.
 class EventService {
-    private lateinit var eventRepo: SdjEventRepo
-    private lateinit var groupRepo: SdjGroupRepo
-    private lateinit var relatedGroupRepo: SdjRelatedGroupRepo
+    private var eventRepo: SdjEventRepo
+    private var groupRepo: SdjGroupRepo
+    private var relatedGroupRepo: SdjRelatedGroupRepo
 
     @Autowired
     //여기서 repo 갈아끼울 수 있음
-    constructor(eventRepo: SdjEventRepo) {
+    constructor(eventRepo: SdjEventRepo, groupRepo: SdjGroupRepo, relatedGroupRepo: SdjRelatedGroupRepo) {
         this.eventRepo = eventRepo
         this.groupRepo = groupRepo
         this.relatedGroupRepo = relatedGroupRepo

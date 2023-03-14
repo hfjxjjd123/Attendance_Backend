@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@RequestMapping("user")
-class UserController {
+@RequestMapping("user-group")
+class UserGroupController {
 
     private final var eventService: EventService
 
@@ -29,6 +29,9 @@ class UserController {
 
         return userGroupsDto
     }
+    //3=>host
+    //2=>partis
+    //0=>none
 
     @PostMapping("/events")
     @ResponseBody

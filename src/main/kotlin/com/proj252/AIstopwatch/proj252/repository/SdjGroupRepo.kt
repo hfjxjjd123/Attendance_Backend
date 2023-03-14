@@ -9,6 +9,11 @@ import java.util.*
 
 @Repository
 interface SdjGroupRepo: JpaRepository<Group, Long> {
+
+    //사용자가 그룹을 생성할 수 있다.
+    //Related Group
+    //Group동시 생성
+
     fun getByGroupId(groupId: Long): Group?
 
 }
