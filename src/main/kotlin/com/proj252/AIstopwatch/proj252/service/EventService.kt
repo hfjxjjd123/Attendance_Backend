@@ -25,18 +25,21 @@ class EventService {
         this.relatedGroupRepo = relatedGroupRepo
     }
 
+    //TODO controller에서 Event를 받을 때 null이면 없다는 신호를 사용자에게 보내줘야한다.
     public fun getEventByGroup(groupId: Long): Event? {
+        var event: Event? = null
 
         try {
-            val event: Event? =
-                eventRepo.getByGroupId(groupId)
-
-            return event
+            eventRepo.getByGroupId(groupId)?.let { event = it } ?: kotlin.run {
+                //사용자에게 group이 없다는 것을 알릴 다른 수단 제공? => Controller에서
+            }
 
         } catch (e: Exception) {
             print("stopwatch get time err, retry?")
             return null
         }
+
+        return event
 
     }
 
@@ -56,15 +59,15 @@ class EventService {
         return groupsId
     }
 
-    public fun getEventsByGroups(groups: List<Long>): List<Event>{
+    public fun getEventsByGroups(groups: List<Long>): List<Event> {
         var events = mutableListOf<Event>()
 
         try {
-            for(groupId in groups){
+            for (groupId in groups) {
                 eventRepo.getByGroupId(groupId)?.let { events.add(it) }
             }
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             //TODO error handling
         }
 

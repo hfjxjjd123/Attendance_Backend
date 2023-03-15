@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import java.sql.Date
 
 
+@Entity
 data class Event(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,

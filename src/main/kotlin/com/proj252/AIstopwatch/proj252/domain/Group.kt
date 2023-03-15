@@ -2,14 +2,15 @@ package com.proj252.AIstopwatch.proj252.domain
 
 import jakarta.persistence.*
 
+@Entity
 data class Group(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Long,
 
     @Column(name = "name")
     val name: String,
     @Column(name = "notification")
-    val notification: String,
+    val notification: String?,
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL])
     var events: MutableList<Event>,

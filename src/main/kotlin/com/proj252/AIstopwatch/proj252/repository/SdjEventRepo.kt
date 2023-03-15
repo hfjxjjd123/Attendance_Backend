@@ -7,6 +7,7 @@ import java.util.*
 
 @Repository
 interface SdjEventRepo: JpaRepository<Event,Long> {
-    fun getByGroupId(groupId: Long): Event?
+    fun findEventByGroupId(groupId: Long): List<Event>
+    //=> 아무것도 찾지 못했을 때 [] 빈리스트를 리턴하게 된다!
 
 }

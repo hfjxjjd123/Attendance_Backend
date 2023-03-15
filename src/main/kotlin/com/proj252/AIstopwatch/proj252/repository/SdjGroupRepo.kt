@@ -14,6 +14,7 @@ interface SdjGroupRepo: JpaRepository<Group, Long> {
     //Related Group
     //Group동시 생성
 
-    fun getByGroupId(groupId: Long): Group?
+    fun getNotification(id: Long): String?
+    fun getGroupById(id: Long): Group?
 
 }
