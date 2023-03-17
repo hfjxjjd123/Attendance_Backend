@@ -8,7 +8,7 @@ data class User(
     val uid: Long? = null,
 
     @Column(name = "name")
-    val name: String,
+    var name: String,
     @Column(name = "id")
     val id: String,
     @Column(name = "password")
