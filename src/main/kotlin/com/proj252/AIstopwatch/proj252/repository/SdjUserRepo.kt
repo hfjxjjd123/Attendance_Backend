@@ -9,6 +9,8 @@ import java.util.*
 @Repository
 interface SdjUserRepo: JpaRepository<User,Long> {
 
-    fun getUserById(uid: Long): User?
+    fun getUserByUid(uid: Long): User?
+
+    fun getUserById(id: String): User?
 
 }

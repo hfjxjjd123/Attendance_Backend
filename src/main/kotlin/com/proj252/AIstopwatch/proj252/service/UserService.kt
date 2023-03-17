@@ -20,12 +20,22 @@ class UserService {
         this.userRepo = userRepo
     }
 
+    public fun createUser(id: String, password: String, name: String): User?{
+        if(userRepo.getUserById(id) == null){
+            val user = User(name, id, password)
+            userRepo.save(user)
+            return user
+        }else{
+            return null
+        }
+    }
+
     public fun modifyUsername(uid: Long, newName: String): String? {
         var user: User?
         var changedName: String? = null
 
         try {
-            user = userRepo.getUserById(uid)
+            user = userRepo.getUserByUid(uid)
 
             user?.let {
                 it.name = newName
