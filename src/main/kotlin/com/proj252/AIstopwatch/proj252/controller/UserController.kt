@@ -3,7 +3,10 @@ package com.proj252.AIstopwatch.proj252.controller
 import com.proj252.AIstopwatch.proj252.domain.User
 import com.proj252.AIstopwatch.proj252.dto.user.SignupDto
 import com.proj252.AIstopwatch.proj252.service.UserService
+import org.apache.coyote.Response
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -38,13 +41,13 @@ class UserController {
     }
     @PostMapping("/create")
     @ResponseBody
-    fun createUser(@RequestBody signupDto: SignupDto): String {
+    fun createUser(@RequestBody signupDto: SignupDto): ResponseEntity<String> {
 
         userService.createUser(signupDto.id, signupDto.password, signupDto.name)?.let {
             //TODO 회원가입시 토큰을 넘겨줘야지? NO 회원가입과 로그인을 분리하자.
-            return "success"
+            return ResponseEntity.ok("success")
         } ?: kotlin.run {
-            return "falied"
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
 
         //통신시 List를 통째로 보내고 client-side에서 해당 메시지(Stinrg)을 객체로 파싱하는 과정을 거쳐야한다.

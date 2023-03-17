@@ -56,13 +56,13 @@ class GroupService {
         return notification
     }
 
-    public fun getGroupById(gid: Long): Group?{
+    public fun getGroup(gid: Long): Group?{
         val group: Group?
 
         group = groupRepo.getGroupById(gid)
-        if(group==null){
-            print("Group이 존재하지 않습니다")
-            //TODO error handling
+
+        if(group == null){
+            print("serious error")
         }
 
         return group
