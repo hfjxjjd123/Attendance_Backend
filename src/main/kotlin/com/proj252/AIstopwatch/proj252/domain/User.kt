@@ -3,6 +3,7 @@ package com.proj252.AIstopwatch.proj252.domain
 import jakarta.persistence.*
 
 @Entity
+@Table(name = "user")
 data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val uid: Long? = null,

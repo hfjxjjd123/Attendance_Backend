@@ -28,7 +28,7 @@ class GroupService {
     public fun getEvents(groupId: Long): List<Event> {
 
         return try {
-            eventRepo.findEventByGroupId(groupId)
+            eventRepo.findAllByGroupId(groupId)
         } catch (e: Exception) {
             print("stopwatch get time err, retry?")
             listOf()
@@ -38,8 +38,8 @@ class GroupService {
 
     public fun createGroup(userId: Long, groupName: String){
 
-        //Entity로 설정한 객체 - 초기화하는법?
-        val group: Group = Group(-1, groupName, null, mutableListOf(), mutableListOf())
+        //TODO 부분적 초기화해야함
+        var group: Group = Group()
 
         groupRepo.save(group)
     }

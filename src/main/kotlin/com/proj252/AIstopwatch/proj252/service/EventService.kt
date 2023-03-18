@@ -25,16 +25,14 @@ class EventService {
         this.relatedGroupRepo = relatedGroupRepo
     }
 
-    //TODO controller에서 Event를 받을 때 null이면 없다는 신호를 사용자에게 보내줘야한다.
-    public fun getEventByGroup(groupId: Long): List<Event> {
-        var event: List<Event>
+    public fun getRecentEventByGroup(groupId: Long): Event? {
+        var event: Event? = null
 
-        event = try {
-            eventRepo.findEventByGroupId(groupId)
+        try {
+           event = eventRepo.findFirstByGroupIdOrderByNextScheduleDesc(groupId)
 
         } catch (e: Exception) {
             print("stopwatch get time err, retry?")
-            listOf()
         }
 
         return event
@@ -62,8 +60,9 @@ class EventService {
 
         try {
             for (groupId in groups) {
-                //TODO 다른함수로 대체해야한다.
-                events.add(eventRepo.findEventByGroupId(groupId)[0])
+                eventRepo.findFirstByGroupIdOrderByNextScheduleDesc(groupId)?.let {
+                    events.add(it)
+                }
             }
 
         } catch (e: Exception) {

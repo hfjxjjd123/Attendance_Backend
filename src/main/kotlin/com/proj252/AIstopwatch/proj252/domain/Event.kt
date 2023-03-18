@@ -5,6 +5,7 @@ import java.sql.Date
 
 
 @Entity
+@Table(name = "event")
 data class Event(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
