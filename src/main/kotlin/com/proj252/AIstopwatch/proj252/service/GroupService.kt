@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class GroupService {
+    //GroupService에서는 Group Repo만 불러오게 처리를 해주자
     private var eventRepo: SdjEventRepo
     private var groupRepo: SdjGroupRepo
     private var relatedGroupRepo: SdjRelatedGroupRepo
