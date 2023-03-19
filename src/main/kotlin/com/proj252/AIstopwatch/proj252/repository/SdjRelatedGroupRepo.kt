@@ -10,6 +10,7 @@ import java.util.*
 
 @Repository
 interface SdjRelatedGroupRepo: JpaRepository<RelatedGroup, Long> {
+    fun getRelatedGroupByGroupId(gid: Long): RelatedGroup?
     fun findGroupIdByUserUidAndRole(uid: Long, role: Int): List<Long>
 
     //쿼리문로직 1

@@ -53,7 +53,7 @@ class GroupService {
         var group: Group =
             Group(name = groupName, notification = "")
 
-        val relatedUser: RelatedUser = RelatedUser(userId, 2, null, null, group)
+        val relatedUser: RelatedUser = RelatedUser(userId, 3, null, null, group)
 
         val savedGroup = groupRepo.save(group)
         relatedUserRepo.save(relatedUser)
@@ -63,7 +63,7 @@ class GroupService {
             val user = userRepo.getUserByUid(userId)
 
             if(user != null){
-                val relatedGroup: RelatedGroup = RelatedGroup(it, role = 2, user)
+                val relatedGroup: RelatedGroup = RelatedGroup(it, role = 3, user)
                 relatedGroupRepo.save(relatedGroup)
             }else{
                 print("this does not happen!")
@@ -96,5 +96,47 @@ class GroupService {
         }
 
         return group
+    }
+
+    public fun addUser2Group(gid: Long, uid: Long){
+
+        //TODO 2개의 save를 한 트랜잭션화 하는 과정이 필요하다.
+
+        val group = groupRepo.getGroupById(gid)
+        //group이 존재할 때
+        if(group != null){
+            //RelatedUser에 사람을 추가한다.
+            val relatedUser = RelatedUser(uid, 2, 0, 0, group)
+            relatedUserRepo.save(relatedUser)
+        }else{
+            print("serious - group not exist")
+        }
+
+        val user = userRepo.getUserByUid(uid)
+        if(user != null){
+            val relatedGroup = RelatedGroup(gid, 2, user)
+            relatedGroupRepo.save(relatedGroup)
+        }else{
+            print("serious - user not exist")
+        }
+    }
+    public fun removeUser2Group(gid: Long, uid: Long){
+
+        //TODO 2개의 save를 한 트랜잭션화 하는 과정이 필요하다.
+
+        val relatedGroup = relatedGroupRepo.getRelatedGroupByGroupId(gid)
+        relatedGroup?.let {
+            relatedGroupRepo.delete(it)
+        }?: run {
+            print("serious! group not exist")
+        }
+
+        val relatedUser = relatedUserRepo.getRelatedUserByUserUid(uid)
+        relatedUser?.let {
+            relatedUserRepo.delete(it)
+        }?: run {
+            print("serious! group not exist")
+        }
+
     }
 }

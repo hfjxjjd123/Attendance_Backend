@@ -72,5 +72,31 @@ class GroupController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
+    @PostMapping("/{gid}/invite")
+    @ResponseBody
+    fun addUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
+
+        try {
+            groupService.addUser2Group(gid, uid)
+            return ResponseEntity.ok("success")
+        }catch (e: Exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
+        }
+    }
+
+    @PostMapping("/{gid}/remove")
+    @ResponseBody
+    fun removeUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
+
+        try {
+            groupService.removeUser2Group(gid, uid)
+            return ResponseEntity.ok("success")
+        }catch (e: Exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
+        }
+    }
+
+
+
 
 }

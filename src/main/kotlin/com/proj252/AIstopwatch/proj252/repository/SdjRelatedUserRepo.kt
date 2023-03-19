@@ -12,6 +12,9 @@ import java.util.*
 @Repository
 interface SdjRelatedUserRepo: JpaRepository<RelatedUser, Long> {
 
+    fun getRelatedUserByUserUid(userUid: Long): RelatedUser?
+
+
     //쿼리문로직 1
     //userId => groupIds => groupId
 }
