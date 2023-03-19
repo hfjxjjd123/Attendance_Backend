@@ -61,7 +61,7 @@ class GroupController {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Group not found")
         }
     }
-    @PostMapping
+    @PostMapping("/create")
     @ResponseBody
     fun createGroup(@RequestBody groupCreateDto: GroupCreateDto): ResponseEntity<String> {
 
