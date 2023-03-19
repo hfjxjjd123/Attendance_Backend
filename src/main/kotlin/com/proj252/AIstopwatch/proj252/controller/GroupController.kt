@@ -2,6 +2,7 @@ package com.proj252.AIstopwatch.proj252.controller
 
 import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
+import com.proj252.AIstopwatch.proj252.dto.group.GroupCreateDto
 import com.proj252.AIstopwatch.proj252.dto.group.GroupDto
 import com.proj252.AIstopwatch.proj252.dto.user.UserGroupsDto
 import com.proj252.AIstopwatch.proj252.service.EventService
@@ -59,8 +60,17 @@ class GroupController {
         } else {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Group not found")
         }
+    }
+    @PostMapping
+    @ResponseBody
+    fun createGroup(@RequestBody groupCreateDto: GroupCreateDto): ResponseEntity<String> {
 
-        //통신시 List를 통째로 보내고 client-side에서 해당 메시지(Stinrg)을 객체로 파싱하는 과정을 거쳐야한다.
+        try {
+            groupService.createGroup(groupCreateDto.userId, groupCreateDto.name)
+            return ResponseEntity.ok("success")
+        }catch (e: Exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
+        }
     }
 
 }

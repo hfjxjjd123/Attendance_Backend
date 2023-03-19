@@ -8,7 +8,7 @@ import java.sql.Date
 @Table(name = "event")
 data class Event(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
 
     @Column(name = "next_schedule")
     val nextSchedule: Date,

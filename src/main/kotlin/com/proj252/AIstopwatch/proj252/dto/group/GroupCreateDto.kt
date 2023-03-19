@@ -4,9 +4,8 @@ import com.proj252.AIstopwatch.proj252.domain.Event
 import java.util.Date
 import java.util.SimpleTimeZone
 
-data class GroupDto(
-    val id: Long?,
+data class GroupCreateDto(
+    val userId: Long,
     val name: String,
-    val notification: String,
-    val event: Event?
 )
+

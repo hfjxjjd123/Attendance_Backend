@@ -24,7 +24,10 @@ class UserController {
 
     @PostMapping("/modify-name")
     @ResponseBody
-    fun modifyUsername(@RequestHeader("Authorization") authToken: String, @RequestBody newName: String): String {
+    fun modifyUsername(
+        @RequestHeader("Authorization") authToken: String,
+        @RequestBody newName: String
+    ): ResponseEntity<String> {
 
         val base64Credentials = authToken.substring(6)
         val credentials = String(Base64.getDecoder().decode(base64Credentials))
@@ -32,13 +35,14 @@ class UserController {
         val uid: Long = credentials.split(":")[0].toLong()
 
         userService.modifyUsername(uid, newName)?.let {
-            return "success - $it"
+            return ResponseEntity.ok("success - $it")
         } ?: run {
-            return "failed"
+            return ResponseEntity.badRequest().body("failed")
         }
 
         //통신시 List를 통째로 보내고 client-side에서 해당 메시지(Stinrg)을 객체로 파싱하는 과정을 거쳐야한다.
     }
+
     @PostMapping("/create")
     @ResponseBody
     fun createUser(@RequestBody signupDto: SignupDto): ResponseEntity<String> {

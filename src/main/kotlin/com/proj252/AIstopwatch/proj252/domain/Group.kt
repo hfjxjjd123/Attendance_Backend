@@ -6,15 +6,15 @@ import jakarta.persistence.*
 @Table(name = "group")
 data class Group(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
 
     @Column(name = "name")
-    val name: String,
+    var name: String,
     @Column(name = "notification")
-    val notification: String?,
+    var notification: String?,
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL])
-    var events: MutableList<Event>,
+    var events: MutableList<Event> = mutableListOf(),
     @OneToMany(mappedBy = "related_user", cascade = [CascadeType.ALL])
-    var relatedUsers: MutableList<RelatedUser>,
+    var relatedUsers: MutableList<RelatedUser> = mutableListOf(),
 )
