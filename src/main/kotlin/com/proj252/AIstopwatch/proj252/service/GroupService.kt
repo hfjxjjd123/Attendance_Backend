@@ -124,19 +124,8 @@ class GroupService {
 
         //TODO 2개의 save를 한 트랜잭션화 하는 과정이 필요하다.
 
-        val relatedGroup = relatedGroupRepo.getRelatedGroupByGroupId(gid)
-        relatedGroup?.let {
-            relatedGroupRepo.delete(it)
-        }?: run {
-            print("serious! group not exist")
-        }
-
-        val relatedUser = relatedUserRepo.getRelatedUserByUserUid(uid)
-        relatedUser?.let {
-            relatedUserRepo.delete(it)
-        }?: run {
-            print("serious! group not exist")
-        }
+        relatedUserRepo.deleteById(uid)
+        relatedGroupRepo.deleteById(gid)
 
     }
 }
