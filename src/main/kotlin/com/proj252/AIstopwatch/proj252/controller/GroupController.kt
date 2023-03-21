@@ -2,6 +2,7 @@ package com.proj252.AIstopwatch.proj252.controller
 
 import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
+import com.proj252.AIstopwatch.proj252.dto.event.EventDto
 import com.proj252.AIstopwatch.proj252.dto.group.GroupCreateDto
 import com.proj252.AIstopwatch.proj252.dto.group.GroupDto
 import com.proj252.AIstopwatch.proj252.dto.user.UserGroupsDto
@@ -33,13 +34,6 @@ class GroupController {
         return groupService.getEvents(gid)
 
         //통신시 List를 통째로 보내고 client-side에서 해당 메시지(Stinrg)을 객체로 파싱하는 과정을 거쳐야한다.
-    }
-
-    @GetMapping("/event")
-    @ResponseBody
-    fun getRecentGroupEvent(@RequestParam gid: Long): Event? {
-
-        return eventService.getRecentEventByGroup(gid)
     }
 
 
@@ -97,6 +91,26 @@ class GroupController {
     }
 
 
+    //여기서 부턴 Event와 연관되어있습니다.
 
+    @GetMapping("/event")
+    @ResponseBody
+    fun getRecentGroupEvent(@RequestParam gid: Long): Event? {
+
+        return eventService.getRecentEventByGroup(gid)
+    }
+
+
+    @PostMapping("/event/create")
+    @ResponseBody
+    fun createEvent(@RequestBody eventDto: EventDto): ResponseEntity<String> {
+
+        try {
+            eventService.createEvent(eventDto)
+            return ResponseEntity.ok("success")
+        }catch (e: Exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
+        }
+    }
 
 }

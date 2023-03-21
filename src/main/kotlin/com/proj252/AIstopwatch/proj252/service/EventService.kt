@@ -2,6 +2,7 @@ package com.proj252.AIstopwatch.proj252.service
 
 import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
+import com.proj252.AIstopwatch.proj252.dto.event.EventDto
 import com.proj252.AIstopwatch.proj252.repository.SdjEventRepo
 import com.proj252.AIstopwatch.proj252.repository.SdjGroupRepo
 import com.proj252.AIstopwatch.proj252.repository.SdjRelatedGroupRepo
@@ -29,7 +30,7 @@ class EventService {
         var event: Event? = null
 
         try {
-           event = eventRepo.findFirstByGroupIdOrderByNextScheduleDesc(groupId)
+            event = eventRepo.findFirstByGroupIdOrderByNextScheduleDesc(groupId)
 
         } catch (e: Exception) {
             print("stopwatch get time err, retry?")
@@ -70,6 +71,35 @@ class EventService {
         }
 
         return events
+    }
+
+    public fun createEvent(eventDto: EventDto) {
+
+        val group: Group? = groupRepo.getGroupById(eventDto.groupId)
+        group?.let {
+            val event: Event =
+                Event(
+                    nextSchedule = eventDto.nextSchedule,
+                    name = eventDto.name,
+                    rule = eventDto.rule,
+                    code = createCode(),
+                    group = group
+                )
+            eventRepo.save(event)
+        } ?: run {
+            print("일어나면 안되는 일이다.")
+        }
+    }
+
+    private fun createCode(): String{
+        val charset = "ABCDEF0123456789" // Define the character set to choose from
+        val length = 4 // String 길이
+
+        val randomString = (1..length)
+            .map { charset.random() }
+            .joinToString("")
+
+        return randomString
     }
 
 
