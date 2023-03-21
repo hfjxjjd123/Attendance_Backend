@@ -124,4 +124,16 @@ class GroupController {
         }
     }
 
+    @PostMapping("/event/delete")
+    @ResponseBody
+    fun deleteEvent(@RequestBody eventId: Long): ResponseEntity<String> {
+
+        try {
+            eventService.deleteEvent(eventId)
+            return ResponseEntity.ok("success")
+        }catch (e: Exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
+        }
+    }
+
 }

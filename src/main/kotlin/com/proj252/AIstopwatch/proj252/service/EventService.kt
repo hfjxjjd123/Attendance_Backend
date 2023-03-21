@@ -120,6 +120,17 @@ class EventService {
         }
 
     }
+    public fun deleteEvent(eventId: Long){
+        var event: Event? = eventRepo.getEventById(eventId)
+
+        event?. let {
+            eventRepo.delete(event)
+
+        }?:{
+            print("이 에러는 나오면 안됩니다.")
+        }
+
+    }
 
 
 }
