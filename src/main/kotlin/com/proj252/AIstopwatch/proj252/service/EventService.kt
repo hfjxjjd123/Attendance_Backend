@@ -104,7 +104,7 @@ class EventService {
     }
 
 
-    public fun changeEvent(eventDto: EventDto){
+    public fun modifyEvent(eventDto: EventDto){
         var event: Event? = eventRepo.getEventById(eventDto.id)
         event?.apply {
             name = eventDto.name

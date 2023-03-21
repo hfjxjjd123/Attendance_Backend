@@ -112,12 +112,12 @@ class GroupController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
-    @PostMapping("/event/create")
+    @PostMapping("/event/change")
     @ResponseBody
-    fun changeEvent(@RequestBody eventDto: EventDto): ResponseEntity<String> {
+    fun modifyEvent(@RequestBody eventDto: EventDto): ResponseEntity<String> {
 
         try {
-            eventService.changeEvent(eventDto)
+            eventService.modifyEvent(eventDto)
             return ResponseEntity.ok("success")
         }catch (e: Exception){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
