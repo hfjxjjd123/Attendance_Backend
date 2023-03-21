@@ -11,11 +11,11 @@ data class Event(
     val id: Long? = null,
 
     @Column(name = "next_schedule")
-    val nextSchedule: Date,
+    var nextSchedule: Date,
     @Column(name = "name")
-    val name: String,
+    var name: String,
     @Column(name = "rule")
-    val rule: Int,
+    var rule: Int,
     @Column(name = "code")
     val code: String,
 

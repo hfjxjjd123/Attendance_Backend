@@ -9,6 +9,7 @@ import com.proj252.AIstopwatch.proj252.repository.SdjRelatedGroupRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.sql.Date
 
 @Service
 @Transactional
@@ -100,6 +101,24 @@ class EventService {
             .joinToString("")
 
         return randomString
+    }
+
+
+    public fun changeEvent(eventDto: EventDto){
+        var event: Event? = eventRepo.getEventById(eventDto.id)
+        event?.apply {
+            name = eventDto.name
+            nextSchedule = eventDto.nextSchedule
+            rule = eventDto.rule
+        }
+
+        event?. let {
+            eventRepo.save(event)
+
+        }?:{
+            print("이 에러는 나오면 안됩니다.")
+        }
+
     }
 
 

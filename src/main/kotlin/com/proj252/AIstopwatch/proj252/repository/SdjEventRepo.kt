@@ -11,5 +11,6 @@ interface SdjEventRepo: JpaRepository<Event,Long> {
     //=> 아무것도 찾지 못했을 때 [] 빈리스트를 리턴하게 된다!
 
     fun findFirstByGroupIdOrderByNextScheduleDesc(groupId: Long): Event?
+    fun getEventById(id: Long): Event?
 
 }
