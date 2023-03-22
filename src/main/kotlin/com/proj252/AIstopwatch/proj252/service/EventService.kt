@@ -74,9 +74,9 @@ class EventService {
         return events
     }
 
-    public fun createEvent(eventDto: EventDto) {
+    public fun createEvent(eventDto: EventDto, gid: Long) {
 
-        val group: Group? = groupRepo.getGroupById(eventDto.groupId)
+        val group: Group? = groupRepo.getGroupById(gid)
         group?.let {
             val event: Event =
                 Event(

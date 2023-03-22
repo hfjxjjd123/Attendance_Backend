@@ -7,7 +7,6 @@ import java.sql.Date
 data class EventDto(
 
     val id: Long,
-    val groupId: Long,
     val nextSchedule: Date,
     val name: String,
     val rule: Int,

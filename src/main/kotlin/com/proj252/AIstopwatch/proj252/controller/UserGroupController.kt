@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@RequestMapping("user-group")
+@RequestMapping
 class UserGroupController {
 
     private final var eventService: EventService
@@ -18,27 +18,23 @@ class UserGroupController {
         this.eventService = eventService
     }
 
-    @GetMapping("/groups")
+    @GetMapping("{uid}/groups")
     @ResponseBody
-    fun getInvolvingGroup(@RequestParam uid: Long): UserGroupsDto {
-        val userGroupsDto: UserGroupsDto =
-            UserGroupsDto(
-                hostGroupId = eventService.getGroupsByUser(uid, 3),
-                partisGroupId = eventService.getGroupsByUser(uid, 2)
-            )
+    fun getInvolvingGroup(@PathVariable uid: Long): UserGroupsDto {
 
-        return userGroupsDto
+        return UserGroupsDto(
+            hostGroupId = eventService.getGroupsByUser(uid, 3),
+            partisGroupId = eventService.getGroupsByUser(uid, 2)
+        )
     }
     //3=>host
     //2=>partis
     //0=>none
 
-    @PostMapping("/events")
+    @PostMapping("{uid}/events")
     @ResponseBody
-    fun getRecentEvent(@RequestBody groupIds:List<Long>):List<Event> {
-        var events: List<Event> = eventService.getEventsByGroups(groups = groupIds)
-
-        return events
+    fun getRecentEvent(@PathVariable uid: Long, @RequestBody groupIds: List<Long>): List<Event> {
+        return eventService.getEventsByGroups(groups = groupIds)
     }
 
 

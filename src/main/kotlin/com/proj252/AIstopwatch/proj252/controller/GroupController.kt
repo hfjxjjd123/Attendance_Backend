@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("group")
+@RequestMapping
 class GroupController {
 
     private final var eventService: EventService
@@ -27,9 +27,9 @@ class GroupController {
         this.groupService = groupService
     }
 
-    @GetMapping("/events")
+    @GetMapping("{gid}/events")
     @ResponseBody
-    fun getGroupEvents(@RequestParam gid: Long): List<Event> {
+    fun getGroupEvents(@PathVariable gid: Long): List<Event> {
 
         return groupService.getEvents(gid)
 
@@ -37,9 +37,9 @@ class GroupController {
     }
 
 
-    @GetMapping
+    @GetMapping("{gid}")
     @ResponseBody
-    fun getGroup(@RequestParam gid: Long): ResponseEntity<Any> {
+    fun getGroup(@PathVariable gid: Long): ResponseEntity<Any> {
 
         var groupDto: GroupDto? = null
 
@@ -56,7 +56,7 @@ class GroupController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping("create-group")
     @ResponseBody
     fun createGroup(@RequestBody groupCreateDto: GroupCreateDto): ResponseEntity<String> {
 
@@ -68,7 +68,7 @@ class GroupController {
         }
     }
 
-    @PostMapping("/{gid}/invite")
+    @PostMapping("{gid}/invite")
     @ResponseBody
     fun addUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
 
@@ -80,7 +80,7 @@ class GroupController {
         }
     }
 
-    @PostMapping("/{gid}/remove")
+    @PostMapping("{gid}/remove")
     @ResponseBody
     fun removeUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
 
@@ -95,29 +95,29 @@ class GroupController {
 
     //여기서 부턴 Event와 연관되어있습니다.
 
-    @GetMapping("/event")
+    @GetMapping("{gid}/recent-event")
     @ResponseBody
-    fun getRecentGroupEvent(@RequestParam gid: Long): Event? {
+    fun getRecentGroupEvent(@PathVariable gid: Long): Event? {
 
         return eventService.getRecentEventByGroup(gid)
     }
 
 
-    @PostMapping("/event/create")
+    @PostMapping("{gid}/create-event")
     @ResponseBody
-    fun createEvent(@RequestBody eventDto: EventDto): ResponseEntity<String> {
+    fun createEvent(@PathVariable gid: Long, @RequestBody eventDto: EventDto): ResponseEntity<String> {
 
         try {
-            eventService.createEvent(eventDto)
+            eventService.createEvent(eventDto, gid)
             return ResponseEntity.ok("success")
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
 
-    @PostMapping("/event/change")
+    @PostMapping("{gid}/change-event")
     @ResponseBody
-    fun modifyEvent(@RequestBody eventDto: EventDto): ResponseEntity<String> {
+    fun modifyEvent(@PathVariable gid: Long, @RequestBody eventDto: EventDto): ResponseEntity<String> {
 
         try {
             eventService.modifyEvent(eventDto)
@@ -127,9 +127,9 @@ class GroupController {
         }
     }
 
-    @PostMapping("/event/delete")
+    @PostMapping("{gid}/delete-event")
     @ResponseBody
-    fun deleteEvent(@RequestBody eventId: Long): ResponseEntity<String> {
+    fun deleteEvent(@PathVariable gid: Long, @RequestBody eventId: Long): ResponseEntity<String> {
 
         try {
             eventService.deleteEvent(eventId)
@@ -139,7 +139,7 @@ class GroupController {
         }
     }
 
-    @GetMapping("/{group_id}/my-attends")
+    @GetMapping("{gid}/my-attends")
     @ResponseBody
     fun getMyAttends(@PathVariable gid: Long, @RequestBody uid: Long): Int {
         return groupService.getMyAttends(gid, uid)
