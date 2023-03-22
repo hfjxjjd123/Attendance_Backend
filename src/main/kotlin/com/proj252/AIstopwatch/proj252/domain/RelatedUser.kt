@@ -10,8 +10,8 @@ data class RelatedUser(
 
     @Column(name = "role")
     val role: Int,
-    @Column(name = "recent_attend")
-    val recentAttend: Int?,
+    @Column(name = "recent_attends")
+    val recentAttends: Int?,
     @Column(name = "next_attend")
     val nextAttend: Int?,
 

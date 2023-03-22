@@ -12,7 +12,9 @@ import java.util.*
 @Repository
 interface SdjRelatedUserRepo: JpaRepository<RelatedUser, Long> {
 
-    fun getRelatedUserByUserUid(userUid: Long): RelatedUser?
+    fun getByUserUid(userUid: Long): RelatedUser?
+    fun findAllByGroupId(groupId: Long): List<RelatedUser>
+    fun getRecentAttendsByGroupIdAndUserUid(groupId: Long, userUid: Long): Int?
 
 
     //쿼리문로직 1

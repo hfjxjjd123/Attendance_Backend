@@ -46,7 +46,7 @@ class GroupController {
         val group: Group? = groupService.getGroup(gid)
         group?.let {
             val event: Event? = eventService.getRecentEventByGroup(gid)
-            groupDto = GroupDto(group.id, group.name, group.notification?:"", event)
+            groupDto = GroupDto(group.id, group.name, group.notification ?: "", event)
         }
 
         return if (groupDto != null) {
@@ -55,6 +55,7 @@ class GroupController {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Group not found")
         }
     }
+
     @PostMapping("/create")
     @ResponseBody
     fun createGroup(@RequestBody groupCreateDto: GroupCreateDto): ResponseEntity<String> {
@@ -62,10 +63,11 @@ class GroupController {
         try {
             groupService.createGroup(groupCreateDto.userId, groupCreateDto.name)
             return ResponseEntity.ok("success")
-        }catch (e: Exception){
+        } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
+
     @PostMapping("/{gid}/invite")
     @ResponseBody
     fun addUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
@@ -73,7 +75,7 @@ class GroupController {
         try {
             groupService.addUser2Group(gid, uid)
             return ResponseEntity.ok("success")
-        }catch (e: Exception){
+        } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
@@ -85,7 +87,7 @@ class GroupController {
         try {
             groupService.removeUser2Group(gid, uid)
             return ResponseEntity.ok("success")
-        }catch (e: Exception){
+        } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
@@ -108,10 +110,11 @@ class GroupController {
         try {
             eventService.createEvent(eventDto)
             return ResponseEntity.ok("success")
-        }catch (e: Exception){
+        } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
+
     @PostMapping("/event/change")
     @ResponseBody
     fun modifyEvent(@RequestBody eventDto: EventDto): ResponseEntity<String> {
@@ -119,7 +122,7 @@ class GroupController {
         try {
             eventService.modifyEvent(eventDto)
             return ResponseEntity.ok("success")
-        }catch (e: Exception){
+        } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
@@ -131,9 +134,14 @@ class GroupController {
         try {
             eventService.deleteEvent(eventId)
             return ResponseEntity.ok("success")
-        }catch (e: Exception){
+        } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
 
+    @GetMapping("/{group_id}/my-attends")
+    @ResponseBody
+    fun getMyAttends(@PathVariable gid: Long, @RequestBody uid: Long): Int {
+        return groupService.getMyAttends(gid, uid)
+    }
 }
