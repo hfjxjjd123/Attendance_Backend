@@ -5,6 +5,7 @@ import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.dto.event.EventDto
 import com.proj252.AIstopwatch.proj252.dto.group.GroupCreateDto
 import com.proj252.AIstopwatch.proj252.dto.group.GroupDto
+import com.proj252.AIstopwatch.proj252.dto.group.GroupJoinDto
 import com.proj252.AIstopwatch.proj252.dto.user.UserGroupsDto
 import com.proj252.AIstopwatch.proj252.service.EventService
 import com.proj252.AIstopwatch.proj252.service.GroupService
@@ -61,19 +62,19 @@ class GroupController {
     fun createGroup(@RequestBody groupCreateDto: GroupCreateDto): ResponseEntity<String> {
 
         try {
-            groupService.createGroup(groupCreateDto.userId, groupCreateDto.name)
+            groupService.createGroup(groupCreateDto.userId, groupCreateDto.name, groupCreateDto.username)
             return ResponseEntity.ok("success")
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
 
-    @PostMapping("{gid}/invite")
+    @PostMapping("{gid}/join")
     @ResponseBody
-    fun addUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
+    fun addUser(@PathVariable gid: Long, @RequestBody groupJoinDto: GroupJoinDto): ResponseEntity<String> {
 
         try {
-            groupService.addUser2Group(gid, uid)
+            groupService.addUser2Group(gid, groupJoinDto.userId, groupJoinDto.username)
             return ResponseEntity.ok("success")
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")

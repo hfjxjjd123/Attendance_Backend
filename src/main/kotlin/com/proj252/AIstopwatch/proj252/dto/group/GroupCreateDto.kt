@@ -7,5 +7,6 @@ import java.util.SimpleTimeZone
 data class GroupCreateDto(
     val userId: Long,
     val name: String,
+    val username: String
 )
 

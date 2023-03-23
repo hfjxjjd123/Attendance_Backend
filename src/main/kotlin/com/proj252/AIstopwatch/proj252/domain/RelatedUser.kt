@@ -10,6 +10,8 @@ data class RelatedUser(
 
     @Column(name = "role")
     val role: Int,
+    @Column(name = "username")
+    var username: String,
     @Column(name = "recent_attends")
     val recentAttends: Int?,
     @Column(name = "next_attend")
