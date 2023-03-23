@@ -135,4 +135,9 @@ class GroupService {
         val attends: Int = relatedUserRepo.getRecentAttendsByGroupIdAndUserUid(gid, uid)?:0
         return attends
     }
+
+    public fun getGroupAttends(gid: Long): List<Int>{
+        val attends: List<Int> = relatedUserRepo
+        return attends
+    }
 }
