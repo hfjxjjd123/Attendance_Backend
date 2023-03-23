@@ -137,7 +137,12 @@ class GroupService {
     }
 
     public fun getGroupAttends(gid: Long): List<Pair<String, Int>>{
-        val attends: List<Pair<String, Int>> = relatedUserRepo.
-        return attends
+        val attends: List<Pair<String, Int>>? = relatedUserRepo.getAttendanceByGroupId(gid)
+        attends?.let {
+            return attends
+        }?: kotlin.run {
+            print("그룹이 존재하지 않는다. 일어나면 안되는 일")
+            return listOf()
+        }
     }
 }

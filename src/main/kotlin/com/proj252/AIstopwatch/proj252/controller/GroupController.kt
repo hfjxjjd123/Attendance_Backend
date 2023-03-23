@@ -145,4 +145,9 @@ class GroupController {
     fun getMyAttends(@PathVariable gid: Long, @RequestBody uid: Long): Int {
         return groupService.getMyAttends(gid, uid)
     }
+    @GetMapping("{gid}/group-attends")
+    @ResponseBody
+    fun getAttends(@PathVariable gid: Long): List<Pair<String, Int>> {
+        return groupService.getGroupAttends(gid)
+    }
 }
