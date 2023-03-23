@@ -4,6 +4,7 @@ import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.domain.RelatedGroup
 import com.proj252.AIstopwatch.proj252.domain.RelatedUser
+import com.proj252.AIstopwatch.proj252.dto.group.AttendsProjection
 import com.proj252.AIstopwatch.proj252.repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -137,9 +138,15 @@ class GroupService {
     }
 
     public fun getGroupAttends(gid: Long): List<Pair<String, Int>>{
-        val attends: List<Pair<String, Int>>? = relatedUserRepo.getAttendanceByGroupId(gid)
+        val attends: List<AttendsProjection>? = relatedUserRepo.getAttendanceByGroupId(gid)
         attends?.let {
             return attends
+                .map { attendsProjection ->
+                    Pair(
+                        attendsProjection.getUsername(),
+                        attendsProjection.getRecentAttends()
+                    )
+                }
         }?: kotlin.run {
             print("그룹이 존재하지 않는다. 일어나면 안되는 일")
             return listOf()
