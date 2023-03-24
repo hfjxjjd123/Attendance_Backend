@@ -17,7 +17,7 @@ interface SdjRelatedUserRepo: JpaRepository<RelatedUser, Long> {
 
     fun findRelatedUserByGroupId(gid: Long): List<Long>
 
-    @Query("SELECT ru.username AS username, ru.recentAttends AS recentAttends FROM RelatedUser ru WHERE ru.group.id = :gid")
+    @Query("SELECT ru.username AS username, ru.attendsLog AS recentAttends FROM RelatedUser ru WHERE ru.group.id = :gid")
     fun getRecentAttendsByGroupId(@Param("gid") gid: Long): List<GroupUserAttendsDto>?
 
     @Query("SELECT ru.username AS username, ru.nextAttend AS nextAttend FROM RelatedUser ru WHERE ru.group.id = :gid")

@@ -12,10 +12,8 @@ data class RelatedUser(
     val role: Int,
     @Column(name = "username")
     var username: String,
-    @Column(name = "recent_attends")
-    val recentAttends: Int?,
-    @Column(name = "next_attend")
-    val nextAttend: Int?,
+    @Column(name = "attends_log")
+    val attendsLog: Int?,
 
     @ManyToOne @JoinColumn(name = "group_id")
     val group: Group

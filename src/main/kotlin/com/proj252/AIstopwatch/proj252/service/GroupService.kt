@@ -55,7 +55,7 @@ class GroupService {
         var group: Group =
             Group(name = groupName, notification = "")
 
-        val relatedUser: RelatedUser = RelatedUser(userId, 3, username ,null, null, group)
+        val relatedUser: RelatedUser = RelatedUser(userId, 3, username ,null, group)
 
         val savedGroup = groupRepo.save(group)
         relatedUserRepo.save(relatedUser)
@@ -108,7 +108,7 @@ class GroupService {
         //group이 존재할 때
         if(group != null){
             //RelatedUser에 사람을 추가한다.
-            val relatedUser = RelatedUser(uid, 2, username,0, 0, group)
+            val relatedUser = RelatedUser(uid, 2, username,0, group)
             relatedUserRepo.save(relatedUser)
         }else{
             print("serious - group not exist")
