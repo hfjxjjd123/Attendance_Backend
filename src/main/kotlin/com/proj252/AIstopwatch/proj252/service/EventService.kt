@@ -1,8 +1,10 @@
 package com.proj252.AIstopwatch.proj252.service
 
+import com.proj252.AIstopwatch.proj252.domain.Attendance
 import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.dto.event.EventDto
+import com.proj252.AIstopwatch.proj252.repository.SdjAttendanceRepo
 import com.proj252.AIstopwatch.proj252.repository.SdjEventRepo
 import com.proj252.AIstopwatch.proj252.repository.SdjGroupRepo
 import com.proj252.AIstopwatch.proj252.repository.SdjRelatedGroupRepo
@@ -18,13 +20,21 @@ class EventService {
     private var eventRepo: SdjEventRepo
     private var groupRepo: SdjGroupRepo
     private var relatedGroupRepo: SdjRelatedGroupRepo
+    private var attendanceRepo: SdjAttendanceRepo
+
 
     @Autowired
     //여기서 repo 갈아끼울 수 있음
-    constructor(eventRepo: SdjEventRepo, groupRepo: SdjGroupRepo, relatedGroupRepo: SdjRelatedGroupRepo) {
+    constructor(
+        eventRepo: SdjEventRepo,
+        groupRepo: SdjGroupRepo,
+        relatedGroupRepo: SdjRelatedGroupRepo,
+        attendanceRepo: SdjAttendanceRepo
+    ) {
         this.eventRepo = eventRepo
         this.groupRepo = groupRepo
         this.relatedGroupRepo = relatedGroupRepo
+        this.attendanceRepo = attendanceRepo
     }
 
     public fun getRecentEventByGroup(groupId: Long): Event? {
@@ -84,7 +94,8 @@ class EventService {
                     name = eventDto.name,
                     rule = eventDto.rule,
                     code = createCode(),
-                    group = group
+                    group = group,
+                    attendances = mutableListOf()
                 )
             eventRepo.save(event)
         } ?: run {
@@ -92,7 +103,7 @@ class EventService {
         }
     }
 
-    private fun createCode(): String{
+    private fun createCode(): String {
         val charset = "ABCDEF0123456789" // Define the character set to choose from
         val length = 4 // String 길이
 
@@ -104,7 +115,7 @@ class EventService {
     }
 
 
-    public fun modifyEvent(eventDto: EventDto){
+    public fun modifyEvent(eventDto: EventDto) {
         var event: Event? = eventRepo.getEventById(eventDto.id)
         event?.apply {
             name = eventDto.name
@@ -112,23 +123,29 @@ class EventService {
             rule = eventDto.rule
         }
 
-        event?. let {
+        event?.let {
             eventRepo.save(event)
 
-        }?:{
+        } ?: {
             print("이 에러는 나오면 안됩니다.")
         }
 
     }
-    public fun deleteEvent(eventId: Long){
+
+    public fun deleteEvent(eventId: Long) {
         var event: Event? = eventRepo.getEventById(eventId)
 
-        event?. let {
+        event?.let {
             eventRepo.delete(event)
 
-        }?:{
+        } ?: {
             print("이 에러는 나오면 안됩니다.")
         }
+
+    }
+
+    public fun getEventAttend(eventId: Long): List<Attendance> {
+        return attendanceRepo.findAllByEventId(eventId)
 
     }
 

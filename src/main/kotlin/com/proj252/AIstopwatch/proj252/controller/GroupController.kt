@@ -1,5 +1,6 @@
 package com.proj252.AIstopwatch.proj252.controller
 
+import com.proj252.AIstopwatch.proj252.domain.Attendance
 import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.dto.event.EventDto
@@ -146,10 +147,9 @@ class GroupController {
     fun getAttends(@PathVariable gid: Long): List<GroupUserAttendsDto> {
         return groupService.getGroupAttends(gid)
     }
-    @GetMapping("{gid}/attends-now")
+    @GetMapping("{gid}/{eid}/attends")
     @ResponseBody
-    fun getAttendsNow(@PathVariable gid: Long): List<GroupUserAttendDto> {
-        return groupService.getGroupAttendsNow(gid)
-
+    fun getAttendsNow(@PathVariable gid: Long, @PathVariable eid: Long): List<Attendance> {
+        return eventService.getEventAttend(eid)
     }
 }

@@ -14,7 +14,7 @@ data class Attendance(
     val userId: Long,
 
     @Column(name = "attend")
-    val attend: Int,
+    var attend: Int = 1,
 
     @ManyToOne @JoinColumn(name = "event_id")
     val event: Event,

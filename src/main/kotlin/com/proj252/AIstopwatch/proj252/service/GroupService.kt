@@ -147,13 +147,5 @@ class GroupService {
             return listOf()
         }
     }
-    public fun getGroupAttendsNow(gid: Long): List<GroupUserAttendDto>{
-        val attends: List<GroupUserAttendDto>? = relatedUserRepo.getNextAttendsByGroupId(gid)
-        attends?.let {
-            return attends
-        }?: kotlin.run {
-            print("그룹이 존재하지 않는다. 일어나면 안되는 일")
-            return listOf()
-        }
-    }
+
 }
