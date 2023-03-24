@@ -150,5 +150,6 @@ class GroupController {
     @ResponseBody
     fun getAttendsNow(@PathVariable gid: Long): List<GroupUserAttendDto> {
         return groupService.getGroupAttendsNow(gid)
+
     }
 }
