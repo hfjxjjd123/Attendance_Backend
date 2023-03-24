@@ -4,7 +4,6 @@ import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.domain.RelatedGroup
 import com.proj252.AIstopwatch.proj252.domain.RelatedUser
-import com.proj252.AIstopwatch.proj252.dto.group.GroupUserAttendDto
 import com.proj252.AIstopwatch.proj252.dto.group.GroupUserAttendsDto
 import com.proj252.AIstopwatch.proj252.repository.*
 import org.springframework.beans.factory.annotation.Autowired

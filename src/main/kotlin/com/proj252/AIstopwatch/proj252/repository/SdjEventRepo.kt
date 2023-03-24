@@ -2,6 +2,7 @@ package com.proj252.AIstopwatch.proj252.repository
 
 import com.proj252.AIstopwatch.proj252.domain.Event
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.*
 
@@ -12,5 +13,8 @@ interface SdjEventRepo: JpaRepository<Event,Long> {
 
     fun findFirstByGroupIdOrderByNextScheduleDesc(groupId: Long): Event?
     fun getEventById(id: Long): Event?
+
+    @Query("SELECT e.code FROM Event e WHERE e.id = :id")
+    fun getCodeById(id: Long): List<String>
 
 }

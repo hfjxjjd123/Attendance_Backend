@@ -9,4 +9,6 @@ interface SdjAttendanceRepo: JpaRepository<Attendance, Long> {
 
     fun findAllByEventId(eventId: Long): List<Attendance>
 
+    fun getByUserId(userId: Long): Attendance?
+
 }

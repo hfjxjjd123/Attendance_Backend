@@ -148,6 +148,32 @@ class EventService {
         return attendanceRepo.findAllByEventId(eventId)
 
     }
+    public fun checking(eid: Long, uid: Long, code: String): String {
+        var stat: String = "wrong"
+
+        val codeReturns: List<String> = eventRepo.getCodeById(eid)
+        if(codeReturns.size == 1){
+            if(codeReturns[0] == code){
+                var attendance: Attendance? = attendanceRepo.getByUserId(uid)
+                attendance?.let{
+                    attendance.attend = 3
+                    attendanceRepo.save(attendance)
+                    stat = "success"
+                } ?:{
+                    stat = "attendance not found"
+                    //TODO
+                }
+            }
+
+        } else if(codeReturns.size == 0){
+            stat = "event not found"
+            //TODO
+        } else{
+            //TODO 이벤트 중복 핸들링
+            stat = "SERIOUS ERR"
+        }
+        return stat
+    }
 
 
 }

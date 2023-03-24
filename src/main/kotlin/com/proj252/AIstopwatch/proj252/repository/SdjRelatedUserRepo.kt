@@ -1,7 +1,6 @@
 package com.proj252.AIstopwatch.proj252.repository
 
 import com.proj252.AIstopwatch.proj252.domain.RelatedUser
-import com.proj252.AIstopwatch.proj252.dto.group.GroupUserAttendDto
 import com.proj252.AIstopwatch.proj252.dto.group.GroupUserAttendsDto
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -19,10 +18,6 @@ interface SdjRelatedUserRepo: JpaRepository<RelatedUser, Long> {
 
     @Query("SELECT ru.username AS username, ru.attendsLog AS recentAttends FROM RelatedUser ru WHERE ru.group.id = :gid")
     fun getRecentAttendsByGroupId(@Param("gid") gid: Long): List<GroupUserAttendsDto>?
-
-    @Query("SELECT ru.username AS username, ru.nextAttend AS nextAttend FROM RelatedUser ru WHERE ru.group.id = :gid")
-    fun getNextAttendsByGroupId(@Param("gid") gid: Long): List<GroupUserAttendDto>?
-
 
 
     //쿼리문로직 1
