@@ -14,7 +14,8 @@ interface SdjGroupRepo: JpaRepository<Group, Long> {
     //Related Group
     //Group동시 생성
 
-    fun getNotification(id: Long): String?
+    @Query("SELECT g.notification FROM Group g WHERE g.id = :id")
+    fun getNotification(id: Long): List<String>
     fun getGroupById(id: Long): Group?
 
 }

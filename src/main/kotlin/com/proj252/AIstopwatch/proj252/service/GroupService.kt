@@ -133,7 +133,7 @@ class GroupService {
 
     //related를 다루게 됩니다.
     public fun getMyAttends(gid: Long, uid: Long): Int{
-        val attends: Int = relatedUserRepo.getRecentAttendsByGroupIdAndUserUid(gid, uid)?:0
+        val attends: Int = relatedUserRepo.getAttendsLogByGroupIdAndUserUid(gid, uid)?:0
         return attends
     }
 
