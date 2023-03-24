@@ -21,4 +21,6 @@ data class Event(
 
     @ManyToOne @JoinColumn(name = "group_id")
     val group: Group,
+    @OneToMany(mappedBy = "attendance", cascade = [CascadeType.ALL])
+    var attendances: MutableList<Attendance>,
 )
