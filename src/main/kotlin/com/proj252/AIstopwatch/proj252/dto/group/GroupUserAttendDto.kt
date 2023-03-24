@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GroupUserAttendsDto(
+data class GroupUserAttendDto(
     @SerialName("user") val username: String,
-    @SerialName("recentAttends") val recentAttends: Int
+    @SerialName("nextAttend") val nextAttend: Int
 )

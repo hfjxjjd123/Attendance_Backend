@@ -3,13 +3,9 @@ package com.proj252.AIstopwatch.proj252.controller
 import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.dto.event.EventDto
-import com.proj252.AIstopwatch.proj252.dto.group.GroupCreateDto
-import com.proj252.AIstopwatch.proj252.dto.group.GroupDto
-import com.proj252.AIstopwatch.proj252.dto.group.GroupJoinDto
-import com.proj252.AIstopwatch.proj252.dto.user.UserGroupsDto
+import com.proj252.AIstopwatch.proj252.dto.group.*
 import com.proj252.AIstopwatch.proj252.service.EventService
 import com.proj252.AIstopwatch.proj252.service.GroupService
-import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -147,7 +143,12 @@ class GroupController {
     }
     @GetMapping("{gid}/group-attends")
     @ResponseBody
-    fun getAttends(@PathVariable gid: Long): List<Pair<String, Int>> {
+    fun getAttends(@PathVariable gid: Long): List<GroupUserAttendsDto> {
         return groupService.getGroupAttends(gid)
+    }
+    @GetMapping("{gid}/attends-now")
+    @ResponseBody
+    fun getAttendsNow(@PathVariable gid: Long): List<GroupUserAttendDto> {
+        return groupService.getGroupAttendsNow(gid)
     }
 }
