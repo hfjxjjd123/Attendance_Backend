@@ -14,7 +14,7 @@ data class RelatedGroup(
     val groupId: Long,
 
     @Column(name = "role")
-    val role: Int,
+    var role: Int,
 
     @ManyToOne @JoinColumn(name = "user_uid")
     val user:User

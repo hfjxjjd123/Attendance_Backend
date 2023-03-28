@@ -9,7 +9,7 @@ data class RelatedUser(
     val userUid: Long,
 
     @Column(name = "role")
-    val role: Int,
+    var role: Int,
     @Column(name = "username")
     var username: String,
     @Column(name = "attends_log")

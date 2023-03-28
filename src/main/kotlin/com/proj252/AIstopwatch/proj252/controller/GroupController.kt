@@ -5,8 +5,11 @@ import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.dto.event.EventDto
 import com.proj252.AIstopwatch.proj252.dto.group.*
+import com.proj252.AIstopwatch.proj252.dto.message.NotifyMessageDto
+import com.proj252.AIstopwatch.proj252.dto.message.PassiveMessageDto
 import com.proj252.AIstopwatch.proj252.service.EventService
 import com.proj252.AIstopwatch.proj252.service.GroupService
+import com.proj252.AIstopwatch.proj252.service.MessageService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,11 +21,13 @@ class GroupController {
 
     private final var eventService: EventService
     private final var groupService: GroupService
+    private final var messageService: MessageService
 
     @Autowired
-    constructor(eventService: EventService, groupService: GroupService) {
+    constructor(eventService: EventService, groupService: GroupService, messageService: MessageService) {
         this.eventService = eventService
         this.groupService = groupService
+        this.messageService = messageService
     }
 
     @GetMapping("{gid}/events")
@@ -72,6 +77,9 @@ class GroupController {
 
         try {
             groupService.addUser2Group(gid, groupJoinDto.userId, groupJoinDto.username)
+
+            val passiveMessageDto: PassiveMessageDto = PassiveMessageDto(gid, "ACPT")
+            messageService.sendPassiveMessage(gid, passiveMessageDto)
             return ResponseEntity.ok("success")
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
@@ -84,6 +92,23 @@ class GroupController {
 
         try {
             groupService.removeUser2Group(gid, uid)
+
+            val passiveMessageDto: PassiveMessageDto = PassiveMessageDto(gid, "GOUT")
+            messageService.sendPassiveMessage(gid, passiveMessageDto)
+            return ResponseEntity.ok("success")
+        } catch (e: Exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
+        }
+    }
+    @PostMapping("{gid}/removed")
+    @ResponseBody
+    fun removedUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
+
+        try {
+            groupService.removeUser2Group(gid, uid)
+
+            val passiveMessageDto: PassiveMessageDto = PassiveMessageDto(gid, "EXPL")
+            messageService.sendPassiveMessage(gid, passiveMessageDto)
             return ResponseEntity.ok("success")
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
@@ -136,6 +161,16 @@ class GroupController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
+    @PostMapping("{gid}/notify")
+    @ResponseBody
+    fun notify(@PathVariable gid: Long, @RequestBody notifyMessageDto: NotifyMessageDto): String {
+        //TODO messageService.notify
+        messageService.sendNotify(gid, notifyMessageDto)
+
+        return "try it"
+    }
+
+
 
     @GetMapping("{gid}/my-attends")
     @ResponseBody

@@ -1,22 +1,19 @@
 package com.proj252.AIstopwatch.proj252.domain
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "attendance")
 data class Attendance(
-    @Id
-    val userId: Long,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long,
 
     @Column(name = "attend")
     var attend: Int = 1,
 
     @ManyToOne @JoinColumn(name = "event_id")
     val event: Event,
+    @ManyToOne @JoinColumn(name = "user_id")
+    val user: Event,
 
 )

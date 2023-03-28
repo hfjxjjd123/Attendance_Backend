@@ -76,15 +76,13 @@ class GroupService {
     }
 
     public fun getNotification(gid: Long): String {
-        var notification: String
+        val notification: List<String> = groupRepo.getNotification(gid)
 
-        try {
-            notification = groupRepo.getNotification(gid) ?: ""
-        } catch (e: Exception) {
-            notification = ""
-            //TODO error handling
+        if(notification.size == 1){
+            return notification[0]
+        }else {
+            return ""
         }
-        return notification
     }
 
     public fun getGroup(gid: Long): Group? {
@@ -125,16 +123,46 @@ class GroupService {
 
         //TODO 2개의 save를 한 트랜잭션화 하는 과정이 필요하다.
 
-        relatedUserRepo.deleteById(uid)
-        relatedGroupRepo.deleteById(gid)
+        relatedUserRepo.deleteById(uid) /wrong
+        relatedGroupRepo.deleteById(gid) /wrong
 
+    }
+
+    public fun delegateUser(gid: Long, receiverId: Long, senderId: Long){
+        val sender: List<RelatedUser>
+        val receiver: List<RelatedUser>
+        val receiverGroup: List<RelatedGroup>
+
+        sender = relatedUserRepo.getByUserUid(gid, senderId)
+        if(sender.size == 1){
+            if(sender[0].role==3){
+                receiver = relatedUserRepo.getByUserUid(gid, receiverId)
+                receiverGroup = relatedGroupRepo.getRelatedGroupByUserUid(receiverId, gid)
+                if((receiver.size == 1) && (receiverGroup.size == 1)){
+                    receiver[0].role = 3
+                    receiverGroup[0].role = 3
+                    relatedUserRepo.save(receiver[0])
+                    relatedGroupRepo.save(receiverGroup[0])
+                }else{
+                    print("SOMETHIING WRONG: NEVER")
+                }
+
+            }else{
+                print("NO AUTHORIZED: ${sender[0].username}")
+            }
+        }
     }
 
 
     //related를 다루게 됩니다.
     public fun getMyAttends(gid: Long, uid: Long): Int{
-        val attends: Int = relatedUserRepo.getAttendsLogByGroupIdAndUserUid(gid, uid)?:0
-        return attends
+        val attendResponse: List<Int> = relatedUserRepo.getAttendsLogByGroupIdAndUserUid(gid, uid)
+
+        if(attendResponse.size == 1){
+            return attendResponse[0]
+        }else {
+            return -1
+        }
     }
 
     public fun getGroupAttends(gid: Long): List<GroupUserAttendsDto>{

@@ -17,6 +17,18 @@ data class User(
 
     @OneToMany(mappedBy = "related_group", cascade = [CascadeType.ALL])
     var relatedGroups: MutableList<RelatedGroup>,
+    @OneToMany(mappedBy = "message", cascade = [CascadeType.ALL])
+    var messages: MutableList<Message>,
+    @OneToMany(mappedBy = "attendance", cascade = [CascadeType.ALL])
+    var attendances: MutableList<Attendance>,
 ) {
-    constructor(name: String, id: String, password: String) : this(null, name, id, password, mutableListOf())
+    constructor(name: String, id: String, password: String) : this(
+        null,
+        name,
+        id,
+        password,
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf()
+    )
 }
