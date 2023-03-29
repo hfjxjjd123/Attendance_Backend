@@ -131,18 +131,15 @@ class GroupController {
     }
     @PostMapping("{gid}/degrade")
     @ResponseBody
-    fun degradeUser(@PathVariable gid: Long, @RequestBody activeMessageDto: ActiveMessageDto): ResponseEntity<String> {
+    fun degradeUser(@PathVariable gid: Long, @CookieValue uid: Long, @RequestBody publicMessageDto: PublicMessageDto): ResponseEntity<String> {
         //위임 선언 메시지 위임 당함 메시지 동시전송
         try {
-            groupService.delegateUser(gid, activeMessageDto.receiver, activeMessageDto.sender)
+            groupService.degradeUser(gid = gid, uid = uid)
 
-            messageService.sendActiveMessage(gid, activeMessageDto)
-
-            val passiveMessageDto = PassiveMessageDto(gid, activeMessageDto.sender, "UPGR")
-            messageService.sendPassiveMessage(gid, passiveMessageDto)
-            return ResponseEntity.ok("success - delegate")
+            messageService.sendPublicMessage(gid, publicMessageDto)
+            return ResponseEntity.ok("success - degrade")
         } catch (e: Exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed - delegate")
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed - degrade")
         }
     }
 

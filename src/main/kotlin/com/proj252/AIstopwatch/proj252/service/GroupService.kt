@@ -139,12 +139,12 @@ class GroupService {
 
         val sender: List<RelatedUser> = relatedUserRepo.getByUserUid(gid, senderId)
         if(sender.size == 1){
-            if(sender[0].role==3){
+            if(sender[0].role==1){
                 receiver = relatedUserRepo.getByUserUid(gid, receiverId)
                 receiverGroup = relatedGroupRepo.getRelatedGroupByUserUid(receiverId, gid)
                 if((receiver.size == 1) && (receiverGroup.size == 1)){
-                    receiver[0].role = 3
-                    receiverGroup[0].role = 3
+                    receiver[0].role = 1
+                    receiverGroup[0].role = 1
                     relatedUserRepo.save(receiver[0])
                     relatedGroupRepo.save(receiverGroup[0])
                 }else{
@@ -155,6 +155,21 @@ class GroupService {
                 print("NO AUTHORIZED: ${sender[0].username}")
             }
         }
+    }
+    public fun degradeUser(gid: Long, uid: Long){
+
+        val host: List<RelatedUser> = relatedUserRepo.getByUserUid(gid, uid)
+        val hostGroup: List<RelatedGroup> = relatedGroupRepo.getRelatedGroupByUserUid(gid = gid, uid = uid)
+
+        if((host.size == 1) && (host.size == 1)){
+            host[0].role = 0
+            hostGroup[0].role = 0
+            relatedUserRepo.save(host[0])
+            relatedGroupRepo.save(hostGroup[0])
+        }else{
+            print("SOMETHIING WRONG: NEVER")
+        }
+
     }
 
 

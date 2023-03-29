@@ -60,6 +60,21 @@ class MessageService {
 
     }
 
+    public fun sendPublicMessage(gid: Long, publicMessageDto: PublicMessageDto){
+        var user: User?
+        var message: Message
+
+        for(uid in publicMessageDto.uidList){
+            user = userRepo.getUserByUid(uid)
+            user?. let {
+                message = Message(groupId = gid, type = publicMessageDto.stat, time = LocalDateTime.now(), user = user)
+                messageRepo.save(message)
+            }?:{
+                print("NO such user: NEVER send")
+            }
+        }
+    }
+
     public fun sendActiveMessage(gid: Long, activeMessageDto: ActiveMessageDto){
         var user: User?
         var message: Message
