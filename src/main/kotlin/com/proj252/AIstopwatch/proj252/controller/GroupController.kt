@@ -129,6 +129,7 @@ class GroupController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed - delegate")
         }
     }
+    //TODO !! 모든 uid 전송 dto 삭제, Cookie를 이용해서 전달될것임!
     @PostMapping("{gid}/degrade")
     @ResponseBody
     fun degradeUser(@PathVariable gid: Long, @CookieValue uid: Long, @RequestBody publicMessageDto: PublicMessageDto): ResponseEntity<String> {
