@@ -4,6 +4,7 @@ import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.domain.Message
 import com.proj252.AIstopwatch.proj252.domain.User
 import com.proj252.AIstopwatch.proj252.dto.message.ActiveMessageDto
+import com.proj252.AIstopwatch.proj252.dto.message.EventMessageDto
 import com.proj252.AIstopwatch.proj252.dto.message.PublicMessageDto
 import com.proj252.AIstopwatch.proj252.dto.message.PassiveMessageDto
 import com.proj252.AIstopwatch.proj252.repository.*
@@ -76,10 +77,9 @@ class MessageService {
     }
 
     public fun sendActiveMessage(gid: Long, activeMessageDto: ActiveMessageDto){
-        var user: User?
         var message: Message
 
-        user = userRepo.getUserByUid(activeMessageDto.receiver)
+        var user: User? = userRepo.getUserByUid(activeMessageDto.receiver)
         user?. let{
             message = Message(groupId = gid, type = activeMessageDto.stat, time = LocalDateTime.now(), user = user)
             messageRepo.save(message)
@@ -89,19 +89,46 @@ class MessageService {
 
     }
     public fun sendPassiveMessage(gid: Long, passiveMessageDto: PassiveMessageDto){
-        val users: List<Long> = relatedUserRepo.getUserIdsByGroupId(gid)
         var message: Message
-        var user: User?
 
-        for(uid in users){
-            user = userRepo.getUserByUid(uid)
-                user?.let {
-                message = Message(groupId = gid, type = passiveMessageDto.stat, time = LocalDateTime.now(), user = user)
-                messageRepo.save(message)
-            } ?: run{
-                print("User is not Exist: NOT DONE")
-            }
+        var user: User? = userRepo.getUserByUid(passiveMessageDto.uid)
+        user?. let{
+            message = Message(groupId = gid, type = passiveMessageDto.stat, time = LocalDateTime.now(), user = user)
+            messageRepo.save(message)
+        }?:{
+            print("NO such user: NEVER send")
         }
 
     }
+    public fun sendEventMessage(eid: Long, eventMessageDto: EventMessageDto){
+        var message: Message
+
+        var user: User? = userRepo.getUserByUid(eventMessageDto.receiver)
+        user?. let{
+            //!!gid가 아닌 eid의 값이 전송되게된다.
+            message = Message(groupId = eid, type = eventMessageDto.stat, time = LocalDateTime.now(), user = user)
+            messageRepo.save(message)
+        }?:{
+            print("NO such user: NEVER send")
+        }
+    }
+
+
+    //!!TODO 이후처리하기
+    public fun sendPublicEventMessage(gid: Long, publicEventMessageDto: PublicEventMessageDto){
+        var user: User?
+        var message: Message
+
+        for(uid in publicEventMessageDto.uidList){
+            user = userRepo.getUserByUid(uid)
+            user?. let {
+                message = Message(groupId = gid, type = publicEventMessageDto.stat, time = LocalDateTime.now(), user = user)
+                messageRepo.save(message)
+            }?:{
+                print("NO such user: NEVER send")
+            }
+        }
+    }
+
+
 }

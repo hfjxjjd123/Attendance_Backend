@@ -206,7 +206,7 @@ class EventService {
 
                 }else{
                     attendanceRepo.save(attendance)
-                    stat = "error - attend!=2"
+                    stat = "error - attend !=2"
 
                 }
                 } ?:{
