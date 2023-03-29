@@ -13,8 +13,8 @@ interface SdjRelatedGroupRepo: JpaRepository<RelatedGroup, Long> {
     @Query("SELECT rg FROM RelatedGroup rg WHERE rg.user.id = :uid AND rg.groupId = :gid")
     fun getRelatedGroupByUserUid(uid: Long, gid: Long): List<RelatedGroup>
 
-    @Query("SELECT rg.groupId FROM RelatedGroup rg WHERE rg.user.id = :uid AND rg.groupId = :gid AND rg.role = :role")
-    fun findGroupIdByUserUidAndRole(uid: Long, gid: Long, role: Int): List<Long>
+    @Query("SELECT rg.groupId FROM RelatedGroup rg WHERE rg.user.id = :uid AND rg.role = :role")
+    fun findGroupIdByUserUidAndRole(uid: Long, role: Int): List<Long>
 
     //쿼리문로직 1
     //userId => groupIds => groupId

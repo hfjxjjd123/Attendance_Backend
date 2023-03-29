@@ -11,7 +11,6 @@ import com.proj252.AIstopwatch.proj252.repository.SdjRelatedGroupRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.sql.Date
 
 @Service
 @Transactional
@@ -172,6 +171,49 @@ class EventService {
             //TODO 이벤트 중복 핸들링
             stat = "SERIOUS ERR"
         }
+        return stat
+    }
+    public fun requestAttend(eid: Long, uid: Long, comment: String): String {
+        var stat: String = "wrong"
+
+        val attendance: Attendance? = attendanceRepo.getByUserId(uid)
+            attendance?.let{
+                if(attendance.attend == 1){
+                    attendance.attend = 2
+                    attendanceRepo.save(attendance)
+                    stat = "success"
+
+                }else{
+                    attendanceRepo.save(attendance)
+                    stat = "already attends"
+
+                }
+                } ?:{
+                    stat = "attendance not found"
+                    //TODO
+                }
+
+        return stat
+    }
+    public fun confirmAttend(eid: Long, uid: Long, attend: Int): String{
+        var stat: String = ""
+        val attendance: Attendance? = attendanceRepo.getByUserId(uid)
+            attendance?.let{
+                if(attendance.attend == 2){
+                    attendance.attend = attend
+                    attendanceRepo.save(attendance)
+                    stat = "confirm to $attend"
+
+                }else{
+                    attendanceRepo.save(attendance)
+                    stat = "error - attend!=2"
+
+                }
+                } ?:{
+                    //TODO
+                stat = "attendance not found: NEVER"
+                }
+
         return stat
     }
 

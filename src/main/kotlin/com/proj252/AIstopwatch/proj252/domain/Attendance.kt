@@ -10,6 +10,8 @@ data class Attendance(
 
     @Column(name = "attend")
     var attend: Int = 1,
+    @Column(name = "comment")
+    var comment: String?,
 
     @ManyToOne @JoinColumn(name = "event_id")
     val event: Event,

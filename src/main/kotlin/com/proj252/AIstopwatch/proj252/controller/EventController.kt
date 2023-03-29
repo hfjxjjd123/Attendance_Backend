@@ -4,7 +4,9 @@ import com.proj252.AIstopwatch.proj252.domain.Attendance
 import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.dto.event.CheckDto
+import com.proj252.AIstopwatch.proj252.dto.event.ConfirmAttendDto
 import com.proj252.AIstopwatch.proj252.dto.event.EventDto
+import com.proj252.AIstopwatch.proj252.dto.event.RequestAttendDto
 import com.proj252.AIstopwatch.proj252.dto.group.*
 import com.proj252.AIstopwatch.proj252.service.EventService
 import com.proj252.AIstopwatch.proj252.service.GroupService
@@ -30,7 +32,7 @@ class EventController {
         return eventService.getEventAttend(eid)
     }
 
-    @GetMapping("{eid}/checking")
+    @PostMapping("{eid}/checking")
     @ResponseBody
     fun checking(@PathVariable eid: Long, @RequestBody checkDto: CheckDto): ResponseEntity<String> {
         val stat: String = eventService.checking(code = checkDto.code, eid = eid, uid = checkDto.userId)
@@ -40,4 +42,26 @@ class EventController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(stat)
         }
     }
+    @PostMapping("{eid}/request-attend")
+    @ResponseBody
+    fun requestAttend(@PathVariable eid: Long, @RequestBody requestAttendDto: RequestAttendDto): ResponseEntity<String> {
+        val stat: String = eventService.requestAttend(eid, requestAttendDto.userId, requestAttendDto.comment)
+        if (stat == "success") {
+            return ResponseEntity.ok(stat)
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(stat)
+        }
+    }
+    @PostMapping("{eid}/confirm-attend")
+    @ResponseBody
+    fun confirmAttend(@PathVariable eid: Long, @RequestBody confirmAttendDto: ConfirmAttendDto): ResponseEntity<String> {
+        val stat: String = eventService.confirmAttend(eid, confirmAttendDto.userId, confirmAttendDto.attend)
+        if (stat == "success") {
+            return ResponseEntity.ok(stat)
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(stat)
+        }
+    }
+
+
 }
