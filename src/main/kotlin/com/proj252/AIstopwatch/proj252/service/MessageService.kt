@@ -1,11 +1,10 @@
 package com.proj252.AIstopwatch.proj252.service
 
-import com.mysql.cj.log.Log
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.domain.Message
 import com.proj252.AIstopwatch.proj252.domain.User
 import com.proj252.AIstopwatch.proj252.dto.message.ActiveMessageDto
-import com.proj252.AIstopwatch.proj252.dto.message.NotifyMessageDto
+import com.proj252.AIstopwatch.proj252.dto.message.PublicMessageDto
 import com.proj252.AIstopwatch.proj252.dto.message.PassiveMessageDto
 import com.proj252.AIstopwatch.proj252.repository.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -36,7 +35,7 @@ class MessageService {
         this.groupRepo = groupRepo
     }
 
-    public fun sendNotify(gid: Long, notifyMessageDto: NotifyMessageDto){
+    public fun sendNotify(gid: Long, notifyMessageDto: PublicMessageDto){
 
         var user: User?
         var message: Message
@@ -44,7 +43,7 @@ class MessageService {
         for(uid in notifyMessageDto.uidList){
             user = userRepo.getUserByUid(uid)
             user?. let {
-                message = Message(groupId = gid, type = "NOTI", time = LocalDateTime.now(), user = user)
+                message = Message(groupId = gid, type = notifyMessageDto.stat, time = LocalDateTime.now(), user = user)
                 messageRepo.save(message)
             }?:{
                 print("NO such user: NEVER send")

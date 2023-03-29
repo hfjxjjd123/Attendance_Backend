@@ -122,18 +122,22 @@ class GroupService {
     public fun removeUser2Group(gid: Long, uid: Long){
 
         //TODO 2개의 save를 한 트랜잭션화 하는 과정이 필요하다.
+        val relatedUser: List<RelatedUser> = relatedUserRepo.getByUserUid(gid, uid)
+        if(relatedUser.size == 1){
+            relatedUserRepo.delete(relatedUser[0])
+        }
 
-        relatedUserRepo.deleteById(uid) /wrong
-        relatedGroupRepo.deleteById(gid) /wrong
-
+        val relatedGroup: List<RelatedGroup> = relatedGroupRepo.getRelatedGroupByUserUid(gid, uid)
+        if(relatedGroup.size == 1){
+            relatedGroupRepo.delete(relatedGroup[0])
+        }
     }
 
     public fun delegateUser(gid: Long, receiverId: Long, senderId: Long){
-        val sender: List<RelatedUser>
         val receiver: List<RelatedUser>
         val receiverGroup: List<RelatedGroup>
 
-        sender = relatedUserRepo.getByUserUid(gid, senderId)
+        val sender: List<RelatedUser> = relatedUserRepo.getByUserUid(gid, senderId)
         if(sender.size == 1){
             if(sender[0].role==3){
                 receiver = relatedUserRepo.getByUserUid(gid, receiverId)

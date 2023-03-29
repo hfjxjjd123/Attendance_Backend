@@ -5,7 +5,8 @@ import com.proj252.AIstopwatch.proj252.domain.Event
 import com.proj252.AIstopwatch.proj252.domain.Group
 import com.proj252.AIstopwatch.proj252.dto.event.EventDto
 import com.proj252.AIstopwatch.proj252.dto.group.*
-import com.proj252.AIstopwatch.proj252.dto.message.NotifyMessageDto
+import com.proj252.AIstopwatch.proj252.dto.message.ActiveMessageDto
+import com.proj252.AIstopwatch.proj252.dto.message.PublicMessageDto
 import com.proj252.AIstopwatch.proj252.dto.message.PassiveMessageDto
 import com.proj252.AIstopwatch.proj252.service.EventService
 import com.proj252.AIstopwatch.proj252.service.GroupService
@@ -78,7 +79,7 @@ class GroupController {
         try {
             groupService.addUser2Group(gid, groupJoinDto.userId, groupJoinDto.username)
 
-            val passiveMessageDto: PassiveMessageDto = PassiveMessageDto(gid, "ACPT")
+            val passiveMessageDto: PassiveMessageDto = PassiveMessageDto(gid, groupJoinDto.userId, "ACPT")
             messageService.sendPassiveMessage(gid, passiveMessageDto)
             return ResponseEntity.ok("success")
         } catch (e: Exception) {
@@ -88,30 +89,60 @@ class GroupController {
 
     @PostMapping("{gid}/remove")
     @ResponseBody
-    fun removeUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
+    fun removeUser(@PathVariable gid: Long, @RequestBody activeMessageDto: ActiveMessageDto): ResponseEntity<String> {
 
         try {
-            groupService.removeUser2Group(gid, uid)
+            groupService.removeUser2Group(gid, activeMessageDto.receiver)
 
-            val passiveMessageDto: PassiveMessageDto = PassiveMessageDto(gid, "GOUT")
+            messageService.sendActiveMessage(gid, activeMessageDto)
+            return ResponseEntity.ok("success - remove")
+        } catch (e: Exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed - remove")
+        }
+    }
+    @PostMapping("{gid}/removed")
+    @ResponseBody
+    fun removedUser(@PathVariable gid: Long, @RequestBody passiveMessageDto: PassiveMessageDto): ResponseEntity<String> {
+
+        try {
+            groupService.removeUser2Group(gid, passiveMessageDto.uid)
+
             messageService.sendPassiveMessage(gid, passiveMessageDto)
             return ResponseEntity.ok("success")
         } catch (e: Exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
         }
     }
-    @PostMapping("{gid}/removed")
+    @PostMapping("{gid}/delegate")
     @ResponseBody
-    fun removedUser(@PathVariable gid: Long, @RequestBody uid: Long): ResponseEntity<String> {
-
+    fun delegateUser(@PathVariable gid: Long, @RequestBody activeMessageDto: ActiveMessageDto): ResponseEntity<String> {
+        //위임 선언 메시지 위임 당함 메시지 동시전송
         try {
-            groupService.removeUser2Group(gid, uid)
+            groupService.delegateUser(gid, activeMessageDto.receiver, activeMessageDto.sender)
 
-            val passiveMessageDto: PassiveMessageDto = PassiveMessageDto(gid, "EXPL")
+            messageService.sendActiveMessage(gid, activeMessageDto)
+
+            val passiveMessageDto = PassiveMessageDto(gid, activeMessageDto.sender, "UPGR")
             messageService.sendPassiveMessage(gid, passiveMessageDto)
-            return ResponseEntity.ok("success")
+            return ResponseEntity.ok("success - delegate")
         } catch (e: Exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed")
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed - delegate")
+        }
+    }
+    @PostMapping("{gid}/degrade")
+    @ResponseBody
+    fun degradeUser(@PathVariable gid: Long, @RequestBody activeMessageDto: ActiveMessageDto): ResponseEntity<String> {
+        //위임 선언 메시지 위임 당함 메시지 동시전송
+        try {
+            groupService.delegateUser(gid, activeMessageDto.receiver, activeMessageDto.sender)
+
+            messageService.sendActiveMessage(gid, activeMessageDto)
+
+            val passiveMessageDto = PassiveMessageDto(gid, activeMessageDto.sender, "UPGR")
+            messageService.sendPassiveMessage(gid, passiveMessageDto)
+            return ResponseEntity.ok("success - delegate")
+        } catch (e: Exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed - delegate")
         }
     }
 
@@ -163,7 +194,7 @@ class GroupController {
     }
     @PostMapping("{gid}/notify")
     @ResponseBody
-    fun notify(@PathVariable gid: Long, @RequestBody notifyMessageDto: NotifyMessageDto): String {
+    fun notify(@PathVariable gid: Long, @RequestBody notifyMessageDto: PublicMessageDto): String {
         //TODO messageService.notify
         messageService.sendNotify(gid, notifyMessageDto)
 
